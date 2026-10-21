@@ -1,0 +1,291 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORLD ENVY TOP PLAYER</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080b14;
+      color: #f1f5ff;
+    }
+
+    header {
+      padding: 22px 7%;
+      background: #0d1220;
+      border-bottom: 1px solid #1c3155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: #55aaff;
+      font-weight: bold;
+      font-size: 19px;
+    }
+
+    nav a {
+      color: #c4d1e8;
+      text-decoration: none;
+      margin-left: 15px;
+      font-size: 14px;
+    }
+
+    .hero {
+      padding: 75px 7% 55px;
+      background: radial-gradient(ellipse at top, #142c55, #080b14 70%);
+    }
+
+    .tag {
+      color: #63b4ff;
+      font-size: 12px;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(35px, 7vw, 62px);
+      margin: 20px 0;
+      line-height: 1.1;
+    }
+
+    h1 span {
+      color: #55aaff;
+    }
+
+    .hero p {
+      color: #9eacc5;
+      max-width: 520px;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 13px 22px;
+      background: #2787ff;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 35px 7% 65px;
+    }
+
+    .section-title {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+
+    .muted {
+      color: #8796b0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .search {
+      width: 100%;
+      margin: 25px 0;
+      padding: 15px;
+      background: #101827;
+      border: 1px solid #253754;
+      border-radius: 9px;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: #55aaff;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #202f49;
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 480px;
+    }
+
+    th, td {
+      padding: 17px 15px;
+      text-align: left;
+      border-bottom: 1px solid #202b40;
+    }
+
+    th {
+      color: #77baff;
+      background: #111b2c;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    td {
+      color: #dce6f7;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rank {
+      color: #63b4ff;
+      font-weight: bold;
+    }
+
+    .status {
+      color: #61e5ac;
+    }
+
+    .empty {
+      padding: 25px;
+      text-align: center;
+      color: #8796b0;
+      display: none;
+    }
+
+    footer {
+      padding: 25px 7%;
+      text-align: center;
+      border-top: 1px solid #1c2b43;
+      color: #71819c;
+      font-size: 12px;
+    }
+
+    @media (max-width: 500px) {
+      header {
+        padding: 20px;
+      }
+
+      nav a {
+        margin-left: 0;
+        margin-right: 12px;
+      }
+
+      .hero {
+        padding: 55px 20px 40px;
+      }
+
+      main {
+        padding: 30px 20px 50px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="logo">𓆩 WORLD ENVY 𓆪</div>
+    <nav>
+      <a href="#home">Home</a>
+      <a href="#leaderboard">Leaderboard</a>
+    </nav>
+  </header>
+
+  <section class="hero" id="home">
+    <div class="tag">OFFICIAL PLAYER DATABASE</div>
+    <h1>WORLD ENVY<br><span>TOP PLAYER</span></h1>
+    <p>
+      The home of champions. Explore player rankings,
+      discover top performers, and follow the journey
+      of the WORLD ENVY community.
+    </p>
+    <a class="button" href="#leaderboard">Explore Players ↗</a>
+  </section>
+
+  <main id="leaderboard">
+    <h2 class="section-title">Player Leaderboard</h2>
+    <p class="muted">
+      Daftar pemain akan ditampilkan di sini.
+      Data contoh dapat diganti setelah database terhubung.
+    </p>
+
+    <input
+      class="search"
+      type="search"
+      id="search"
+      placeholder="Cari nama pemain..."
+      aria-label="Cari nama pemain"
+    >
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="players">
+          <tr>
+            <td class="rank">#1</td>
+            <td>Player Example 01</td>
+            <td>0</td>
+            <td class="status">Active</td>
+          </tr>
+          <tr>
+            <td class="rank">#2</td>
+            <td>Player Example 02</td>
+            <td>0</td>
+            <td class="status">Active</td>
+          </tr>
+          <tr>
+            <td class="rank">#3</td>
+            <td>Player Example 03</td>
+            <td>0</td>
+            <td class="status">Active</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="empty" id="empty">
+        Pemain tidak ditemukan.
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    © 2026 WORLD ENVY TOP PLAYER · Community Project
+  </footer>
+
+  <script>
+    const search = document.getElementById("search");
+    const rows = [...document.querySelectorAll("#players tr")];
+    const empty = document.getElementById("empty");
+
+    search.addEventListener("input", function () {
+      const query = this.value.toLowerCase();
+      let visible = 0;
+
+      rows.forEach(row => {
+        const match = row.textContent.toLowerCase().includes(query);
+        row.style.display = match ? "" : "none";
+        if (match) visible++;
+      });
+
+      empty.style.display = visible ? "none" : "block";
+    });
+  </script>
+</body>
+</html>
