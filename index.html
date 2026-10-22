@@ -180,7 +180,7 @@
 .feature-list {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 12px;
+  gap: 14px;
   width: 100%;
 }
 
@@ -198,7 +198,6 @@
   font-size: 18px;
   line-height: 1.4;
   margin-bottom: 10px;
-  overflow-wrap: anywhere;
 }
 
 .feature-item p {
@@ -212,8 +211,13 @@
   color: #aab6cb;
   font-size: 14px;
   line-height: 1.7;
-  margin: 18px 0 0;
+  margin-top: 18px;
 }
+
+@media (max-width: 500px) {
+  .features {
+    padding: 30px 20px;
+  }
 
   .features h2 {
     font-size: 25px;
@@ -227,7 +231,7 @@
 
   .feature-list {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 14px;
   }
 
   .feature-item {
