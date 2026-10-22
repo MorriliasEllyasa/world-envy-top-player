@@ -269,29 +269,27 @@
     © 2026 WORLD ENVY TOP PLAYER · Community Project
   </footer>
 
-  <script> 
-const SUPABASE_URL = 
-"https://cbcfrnxgcbetueuyhfpe.supabase.co";
-‎const SUPABASE_KEY = "sb_publishable_hygoytfqzzQbI55iMeUiiA_4aLhnhkL";
+  
+<script>
+  const SUPABASE_URL = "https://cbcfrnxgcbetueuyhfpe.supabase.co";
+  const SUPABASE_KEY = "sb_publishable_hygoytfqzzQbI55iMeUiiA_4aLhnhkL";
 
-    const search = document.getElementById("search");
-    const rows = [...document.querySelectorAll("#players tr")];
-    const empty = document.getElementById("empty");
+  const search = document.getElementById("search");
+  const rows = [...document.querySelectorAll("#players tr")];
+  const empty = document.getElementById("empty");
 
-    search.addEventListener("input", function () {
-      const query = this.value.toLowerCase();
-      let visible = 0;
+  search.addEventListener("input", function () {
+    const query = this.value.toLowerCase();
+    let visible = 0;
 
-      rows.forEach(row => {
-        const match = row.textContent.toLowerCase().includes(query);
-        row.style.display = match ? "" : "none";
-        if (match) visible++;
-      });
-
-      empty.style.display = visible ? "none" : "block";
+    rows.forEach(row => {
+      const match = row.textContent.toLowerCase().includes(query);
+      row.style.display = match ? "" : "none";
+      if (match) visible++;
     });
-  </script>
+
+    empty.style.display = visible ? "none" : "block";
+  });
+</script>
 </body>
 </html>
-const SUPABASE_URL = "https://PROJECT_ID.supabase.co";
-const SUPABASE_KEY = "sb_publishable_...";
