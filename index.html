@@ -270,26 +270,85 @@
   </footer>
 
   
+
 <script>
-  const SUPABASE_URL = "https://cbcfrnxgcbetueuyhfpe.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_hygoytfqzzQbI55iMeUiiA_4aLhnhkL";
+  const SUPABASE_URL = "GANTI_DENGAN_PROJECT_URL_ASLI";
+  const SUPABASE_KEY = "GANTI_DENGAN_PUBLISHABLE_KEY_ASLI";
+
+  const db = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+  );
 
   const search = document.getElementById("search");
-  const rows = [...document.querySelectorAll("#players tr")];
+  const playerTable = document.getElementById("players");
   const empty = document.getElementById("empty");
 
-  search.addEventListener("input", function () {
-    const query = this.value.toLowerCase();
-    let visible = 0;
+  let allPlayers = [];
 
-    rows.forEach(row => {
-      const match = row.textContent.toLowerCase().includes(query);
-      row.style.display = match ? "" : "none";
-      if (match) visible++;
+  function renderPlayers() {
+    const query = search.value.trim().toLowerCase();
+
+    const filtered = allPlayers.filter(player =>
+      String(player.player_name ?? "")
+        .toLowerCase()
+        .includes(query)
+    );
+
+    playerTable.replaceChildren();
+
+    filtered.forEach((player, index) => {
+      const row = document.createElement("tr");
+
+      const values = [
+        `#${index + 1}`,
+        player.player_name ?? "Tanpa nama",
+        Number(player.score ?? 0).toLocaleString("id-ID"),
+        "—"
+      ];
+
+      values.forEach((value, column) => {
+        const cell = document.createElement("td");
+        cell.textContent = value;
+
+        if (column === 0) cell.className = "rank";
+        if (column === 3) cell.className = "status";
+
+        row.appendChild(cell);
+      });
+
+      playerTable.appendChild(row);
     });
 
-    empty.style.display = visible ? "none" : "block";
-  });
+    empty.style.display = filtered.length ? "none" : "block";
+    empty.textContent = query
+      ? "Pemain tidak ditemukan."
+      : "Belum ada data pemain.";
+  }
+
+  async function loadPlayers() {
+    empty.style.display = "block";
+    empty.textContent = "Memuat data pemain...";
+
+    const { data, error } = await db
+      .from("players")
+      .select("id, player_name, score, history_percentage")
+      .order("score", { ascending: false });
+
+    if (error) {
+      console.error("Supabase error:", error);
+      empty.textContent =
+        "Data gagal dimuat. Periksa koneksi atau kebijakan akses Supabase.";
+      return;
+    }
+
+    allPlayers = data ?? [];
+    renderPlayers();
+  }
+
+  search.addEventListener("input", renderPlayers);
+
+  loadPlayers();
 </script>
 </body>
 </html>
