@@ -529,7 +529,11 @@ async function toggleHistory(playerId) {
       .eq("player_id", playerId)
       .order("week_start", { ascending: true });
 
-    if (error) throw error;
+    if (error) {
+  console.error("Error riwayat Supabase:", error);
+  panel.textContent = "Gagal memuat: " + error.message;
+  return;
+    }
 
     const latest = data && data.length ? data[data.length - 1] : null;
     const percentage = latest ? Number(latest.history_percentage) : 0;
