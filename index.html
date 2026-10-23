@@ -564,6 +564,66 @@ async function toggleHistory(playerId) {
     bar.appendChild(fill);
     panel.appendChild(bar);
 
+    // Diagram riwayat mingguan
+const chartBox = document.createElement("div");
+chartBox.style.cssText =
+  "position:relative;width:100%;height:260px;margin-top:24px";
+
+const canvas = document.createElement("canvas");
+chartBox.appendChild(canvas);
+panel.appendChild(chartBox);
+
+if (data && data.length > 0) {
+  const lineColor =
+    status === "Baik" ? "#35d399" :
+    status === "Sedang" ? "#fbbf24" :
+    status === "Buruk" ? "#fb7185" : "#71819c";
+
+  new Chart(canvas, {
+    type: "line",
+    data: {
+      labels: data.map(item => item.week_start),
+      datasets: [{
+        label: "Persentase Riwayat",
+        data: data.map(item => Number(item.history_percentage)),
+        borderColor: lineColor,
+        backgroundColor: lineColor + "33",
+        pointBackgroundColor: data.map(item => {
+          const s = historyStatus(Number(item.history_percentage));
+          return s === "Baik" ? "#35d399" :
+                 s === "Sedang" ? "#fbbf24" :
+                 s === "Buruk" ? "#fb7185" : "#71819c";
+        }),
+        pointRadius: 5,
+        borderWidth: 3,
+        tension: 0.3,
+        fill: true
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        y: {
+          min: 0,
+          max: 100,
+          ticks: { color: "#aab6cb" },
+          grid: { color: "#26354d" }
+        },
+        x: {
+          ticks: { color: "#aab6cb" },
+          grid: { color: "#26354d" }
+        }
+      },
+      plugins: {
+        legend: {
+          labels: { color: "#dce6f7" }
+        }
+      }
+    }
+  });
+}
+
     if (latest && latest.description) {
       const desc = document.createElement("p");
       desc.style.cssText = "color:#aab6cb;line-height:1.7;margin-top:10px";
