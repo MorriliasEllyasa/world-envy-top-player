@@ -466,7 +466,7 @@ function renderPlayers() {
     const row = document.createElement("tr");
 
     [`#${index + 1}`, player.player_name || "Tanpa nama",
-      Number(player.score || 0).toLocaleString("id-ID"), "Lihat riwayat"]
+  Number(player.score || 0).toLocaleString("id-ID"), "Aktif"]
       .forEach((value, col) => {
         const cell = document.createElement("td");
 
