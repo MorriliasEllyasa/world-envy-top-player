@@ -243,6 +243,69 @@
   }
 }
 
+.player-name-wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.player-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border: 1px solid #b88b32;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #33250b, #17130a, #493612);
+  color: #f5d77d;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 0 9px #d4a72c33;
+}
+
+.player-title .wing {
+  color: #e9c766;
+  font-size: 15px;
+  display: inline-block;
+}
+
+.player-title.rgb-active .title-text {
+  background: linear-gradient(
+    90deg,
+    #ff4545,
+    #ffb52e,
+    #f8ff55,
+    #39ff88,
+    #35d9ff,
+    #6975ff,
+    #d75cff,
+    #ff4545
+  );
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: title-rgb-flow 4s linear infinite;
+}
+
+@keyframes title-rgb-flow {
+  from {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player-title.rgb-active .title-text {
+    animation: none;
+  }
+}
+    
     .empty {
       padding: 25px;
       text-align: center;
@@ -471,16 +534,46 @@ function renderPlayers() {
       .forEach((value, col) => {
         const cell = document.createElement("td");
 
-        if (col === 1) {
-          const button = document.createElement("button");
-          button.textContent = value;
-          button.style.cssText =
-            "background:none;border:0;color:#63b4ff;font-weight:bold;font-size:14px;text-align:left;cursor:pointer";
-          button.onclick = () => toggleHistory(player.id);
-          cell.appendChild(button);
-        } else {
-          cell.textContent = value;
-        }
+        
+if (col === 1) {
+  const wrap = document.createElement("div");
+  wrap.className = "player-name-wrap";
+
+  const button = document.createElement("button");
+  button.textContent = value;
+  button.style.cssText =
+    "background:none;border:0;color:#63b4ff;font-weight:bold;font-size:14px;text-align:left;cursor:pointer";
+  button.onclick = () => toggleHistory(player.id);
+  wrap.appendChild(button);
+
+  if (player.player_title && player.player_title.trim()) {
+    const badge = document.createElement("span");
+    badge.className = "player-title";
+
+    if (player.title_rgb === true) {
+      badge.classList.add("rgb-active");
+    }
+
+    const leftWing = document.createElement("span");
+    leftWing.className = "wing";
+    leftWing.textContent = "❧";
+
+    const titleText = document.createElement("span");
+    titleText.className = "title-text";
+    titleText.textContent = player.player_title;
+
+    const rightWing = document.createElement("span");
+    rightWing.className = "wing";
+    rightWing.textContent = "❧";
+
+    badge.append(leftWing, titleText, rightWing);
+    wrap.appendChild(badge);
+  }
+
+  cell.appendChild(wrap);
+} else {
+  cell.textContent = value;
+}
 
         if (col === 0) cell.className = "rank";
         if (col === 3) cell.className = "status";
@@ -696,11 +789,11 @@ async function loadPlayers() {
   empty.style.display = "block";
   empty.textContent = "Memuat data pemain...";
 
-  const { data, error } = await db
-    .from("players")
-    .select("id, player_name, score")
-    .order("score", { ascending: false });
-
+const { data, error } = await db
+  .from("players")
+  .select("id, player_name, score, player_title, title_rgb")
+  .order("score", { ascending: false });
+  
   if (error) {
     console.error(error);
     empty.textContent = "Data pemain gagal dimuat. Periksa koneksi Supabase.";
