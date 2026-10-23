@@ -631,20 +631,55 @@ if (data && data.length > 0) {
       panel.appendChild(desc);
     }
 
-    if (data && data.length) {
-      const heading = document.createElement("h4");
-      heading.textContent = "Riwayat Mingguan";
-      heading.style.cssText = "margin-top:20px;color:#63b4ff";
-      panel.appendChild(heading);
+if (data && data.length) {
+  const heading = document.createElement("h4");
+  heading.textContent = "Riwayat Mingguan";
+  heading.style.cssText = "margin-top:20px;color:#63b4ff";
+  panel.appendChild(heading);
 
-      data.forEach(item => {
-        const entry = document.createElement("p");
-        entry.style.cssText = "margin-top:10px;color:#c4d1e8;line-height:1.6";
-        entry.textContent =
-          `${item.week_start}: ${item.history_percentage}% — ${historyStatus(Number(item.history_percentage))}` +
-          (item.description ? ` | ${item.description}` : "");
-        panel.appendChild(entry);
-      });
+  data.forEach(item => {
+    const value = Math.max(
+      0,
+      Math.min(100, Number(item.history_percentage) || 0)
+    );
+
+    const s = historyStatus(value);
+    const color =
+      s === "Baik" ? "#35d399" :
+      s === "Sedang" ? "#fbbf24" :
+      s === "Buruk" ? "#fb7185" : "#71819c";
+
+    const entry = document.createElement("div");
+    entry.style.cssText = "margin-top:16px";
+
+    const label = document.createElement("p");
+    label.style.cssText =
+      "color:#c4d1e8;font-size:13px;margin-bottom:7px;line-height:1.6";
+    label.textContent = `${item.week_start} — ${value}% (${s})`;
+
+    const track = document.createElement("div");
+    track.style.cssText =
+      "height:10px;background:#26354d;border-radius:10px;overflow:hidden";
+
+    const fill = document.createElement("div");
+    fill.style.cssText =
+      `height:100%;width:${value}%;background:${color};border-radius:10px;transition:width .3s`;
+
+    track.appendChild(fill);
+    entry.appendChild(label);
+    entry.appendChild(track);
+
+    if (item.description) {
+      const desc = document.createElement("p");
+      desc.style.cssText =
+        "color:#8796b0;font-size:12px;margin-top:6px;line-height:1.6";
+      desc.textContent = item.description;
+      entry.appendChild(desc);
+    }
+
+    panel.appendChild(entry);
+  });
+  
     }
   } catch (error) {
     console.error("Gagal memuat riwayat:", error);
