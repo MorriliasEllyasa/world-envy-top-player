@@ -433,86 +433,186 @@ footer {
     © 2026 WORLD ENVY TOP PLAYER · Community Project
 </footer>
 
+
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 <script>
-  const SUPABASE_URL = "https://cbcfrnxgcbetueuyhfpe.supabase.co";
-  const SUPABASE_KEY = "sb_publishable_hygoytfqzzQbI55iMeUiiA_4aLhnhkL";
+const SUPABASE_URL = "https://cbcfrnxgcbetueuyhfpe.supabase.co";
+const SUPABASE_KEY = "sb_publishable_hygoytfqzzQbI55iMeUiiA_4aLhnhkL";
 
-  const db = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const search = document.getElementById("search");
+const playerTable = document.getElementById("players");
+const empty = document.getElementById("empty");
+
+let allPlayers = [];
+let openedPlayerId = null;
+
+function historyStatus(value) {
+  if (value >= 80 && value <= 100) return "Baik";
+  if (value >= 40 && value <= 70) return "Sedang";
+  if (value >= 1 && value <= 30) return "Buruk";
+  return "Belum ditentukan";
+}
+
+function renderPlayers() {
+  const query = search.value.trim().toLowerCase();
+  const filtered = allPlayers.filter(p =>
+    String(p.player_name || "").toLowerCase().includes(query)
   );
 
-  const search = document.getElementById("search");
-  const playerTable = document.getElementById("players");
-  const empty = document.getElementById("empty");
+  playerTable.replaceChildren();
 
-  let allPlayers = [];
+  filtered.forEach((player, index) => {
+    const row = document.createElement("tr");
 
-  function renderPlayers() {
-    const query = search.value.trim().toLowerCase();
-
-    const filtered = allPlayers.filter(player =>
-      String(player.player_name ?? "")
-        .toLowerCase()
-        .includes(query)
-    );
-
-    playerTable.replaceChildren();
-
-    filtered.forEach((player, index) => {
-      const row = document.createElement("tr");
-
-      const values = [
-        `#${index + 1}`,
-        player.player_name ?? "Tanpa nama",
-        Number(player.score ?? 0).toLocaleString("id-ID"),
-        "—"
-      ];
-
-      values.forEach((value, column) => {
+    [`#${index + 1}`, player.player_name || "Tanpa nama",
+      Number(player.score || 0).toLocaleString("id-ID"), "Lihat riwayat"]
+      .forEach((value, col) => {
         const cell = document.createElement("td");
-        cell.textContent = value;
 
-        if (column === 0) cell.className = "rank";
-        if (column === 3) cell.className = "status";
+        if (col === 1) {
+          const button = document.createElement("button");
+          button.textContent = value;
+          button.style.cssText =
+            "background:none;border:0;color:#63b4ff;font-weight:bold;font-size:14px;text-align:left;cursor:pointer";
+          button.onclick = () => toggleHistory(player.id);
+          cell.appendChild(button);
+        } else {
+          cell.textContent = value;
+        }
 
+        if (col === 0) cell.className = "rank";
+        if (col === 3) cell.className = "status";
         row.appendChild(cell);
       });
 
-      playerTable.appendChild(row);
-    });
+    playerTable.appendChild(row);
 
-    empty.style.display = filtered.length ? "none" : "block";
-    empty.textContent = query
-      ? "Pemain tidak ditemukan."
-      : "Belum ada data pemain.";
+    if (String(openedPlayerId) === String(player.id)) {
+      const detailRow = document.createElement("tr");
+      const detailCell = document.createElement("td");
+      detailCell.colSpan = 4;
+      detailCell.style.cssText = "background:#0d1626;padding:20px";
+
+      const panel = document.createElement("div");
+      panel.textContent = "Memuat statistik...";
+      panel.id = "history-panel-" + player.id;
+      detailCell.appendChild(panel);
+      detailRow.appendChild(detailCell);
+      playerTable.appendChild(detailRow);
+    }
+  });
+
+  empty.style.display = filtered.length ? "none" : "block";
+  empty.textContent = query
+    ? "Pemain tidak ditemukan."
+    : "Belum ada data pemain.";
+}
+
+async function toggleHistory(playerId) {
+  if (String(openedPlayerId) === String(playerId)) {
+    openedPlayerId = null;
+    renderPlayers();
+    return;
   }
 
-  async function loadPlayers() {
-    empty.style.display = "block";
-    empty.textContent = "Memuat data pemain...";
+  openedPlayerId = playerId;
+  renderPlayers();
 
+  const panel = document.getElementById("history-panel-" + playerId);
+  if (!panel) return;
+
+  try {
     const { data, error } = await db
-      .from("players")
-      .select("id, player_name, score, history_percentage")
-      .order("score", { ascending: false });
+      .from("player_history_weekly")
+      .select("week_start, history_percentage, description")
+      .eq("player_id", playerId)
+      .order("week_start", { ascending: true });
 
-    if (error) {
-      console.error("Supabase error:", error);
-      empty.textContent =
-        "Data gagal dimuat. Periksa koneksi atau kebijakan akses Supabase.";
-      return;
+    if (error) throw error;
+
+    const latest = data && data.length ? data[data.length - 1] : null;
+    const percentage = latest ? Number(latest.history_percentage) : 0;
+    const status = latest ? historyStatus(percentage) : "Belum ada riwayat";
+
+    panel.replaceChildren();
+
+    const title = document.createElement("h3");
+    title.textContent = "Riwayat Pemain";
+    title.style.color = "#63b4ff";
+    panel.appendChild(title);
+
+    const percent = document.createElement("p");
+    percent.style.cssText = "margin-top:12px;line-height:1.8";
+    percent.textContent = latest
+      ? `Persentase Riwayat: ${percentage}% — Status: ${status}`
+      : "Belum ada data riwayat mingguan untuk pemain ini.";
+    panel.appendChild(percent);
+
+    const bar = document.createElement("div");
+    bar.style.cssText =
+      "height:12px;background:#26354d;border-radius:10px;margin:12px 0;overflow:hidden";
+
+    const fill = document.createElement("div");
+    fill.style.cssText =
+      `height:100%;width:${Math.max(0, Math.min(100, percentage))}%;background:${status === "Baik" ? "#35d399" : status === "Sedang" ? "#fbbf24" : status === "Buruk" ? "#fb7185" : "#71819c"};transition:width .3s`;
+    bar.appendChild(fill);
+    panel.appendChild(bar);
+
+    if (latest && latest.description) {
+      const desc = document.createElement("p");
+      desc.style.cssText = "color:#aab6cb;line-height:1.7;margin-top:10px";
+      desc.textContent = "Keterangan: " + latest.description;
+      panel.appendChild(desc);
     }
 
-    allPlayers = data ?? [];
-    renderPlayers();
+    if (data && data.length) {
+      const heading = document.createElement("h4");
+      heading.textContent = "Riwayat Mingguan";
+      heading.style.cssText = "margin-top:20px;color:#63b4ff";
+      panel.appendChild(heading);
+
+      data.forEach(item => {
+        const entry = document.createElement("p");
+        entry.style.cssText = "margin-top:10px;color:#c4d1e8;line-height:1.6";
+        entry.textContent =
+          `${item.week_start}: ${item.history_percentage}% — ${historyStatus(Number(item.history_percentage))}` +
+          (item.description ? ` | ${item.description}` : "");
+        panel.appendChild(entry);
+      });
+    }
+  } catch (error) {
+    console.error("Gagal memuat riwayat:", error);
+    panel.textContent =
+      "Riwayat gagal dimuat. Periksa tabel player_history_weekly dan kebijakan akses Supabase.";
+  }
+}
+
+search.addEventListener("input", () => {
+  openedPlayerId = null;
+  renderPlayers();
+});
+
+async function loadPlayers() {
+  empty.style.display = "block";
+  empty.textContent = "Memuat data pemain...";
+
+  const { data, error } = await db
+    .from("players")
+    .select("id, player_name, score")
+    .order("score", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    empty.textContent = "Data pemain gagal dimuat. Periksa koneksi Supabase.";
+    return;
   }
 
-  search.addEventListener("input", renderPlayers);
+  allPlayers = data || [];
+  renderPlayers();
+}
 
-  loadPlayers();
+loadPlayers();
 </script>
 </body>
 </html>
