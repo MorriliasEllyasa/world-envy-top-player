@@ -665,7 +665,15 @@ if (data && data.length > 0) {
   new Chart(canvas.getContext("2d"), {
   type: "line",
     data: {
-      labels: data.map(item => item.week_start),
+      
+      labels: data.map(item => {
+  const date = new Date(item.week_start + "T00:00:00");
+  return date.toLocaleDateString("id-ID", {
+    day: "2-digit",
+    month: "short",
+    year: "2-digit"
+  });
+}),
       datasets: [{
         label: "Persentase Riwayat",
         data: data.map(item => Number(item.history_percentage)),
