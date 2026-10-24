@@ -698,9 +698,35 @@ if (data && data.length > 0) {
       }]
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
+  responsive: true,
+  maintainAspectRatio: false,
+  scales: {
+    y: {
+      min: 0,
+      max: 100,
+      ticks: {
+        stepSize: 20,
+        color: "#aab6cb",
+        callback: value => value + "%"
+      },
+      grid: {
+        color: "#26354d"
+      },
+      title: {
+        display: true,
+        text: "Persentase",
+        color: "#aab6cb"
+      }
+    }
+  },
+  plugins: {
+    legend: {
+      labels: {
+        color: "#dce6f7"
+      }
+    }
+  }
+}
         y: {
   min: 0,
   max: 100,
