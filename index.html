@@ -494,8 +494,22 @@ footer {
 
   <section id="admin-login" style="display:none; padding:30px 7%; background:#0d1220; border-top:1px solid #263b5a">
 
-  </section>
+  <h2>Login Admin</h2>
 
+  <form id="admin-login-form">
+    <label for="admin-email">Email</label>
+    <input id="admin-email" type="email" required placeholder="Email admin">
+
+    <label for="admin-password">Password</label>
+    <input id="admin-password" type="password" required placeholder="Password admin">
+
+    <button type="submit">Masuk</button>
+    <button type="button" id="admin-logout" style="display:none">Keluar</button>
+
+    <p id="admin-login-message"></p>
+  </form>
+
+</section>
   <footer>
     <span id="admin-secret-trigger" style="cursor:default">
       © 2026 WORLD ENVY TOP PLAYER · Community Project
