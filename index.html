@@ -647,16 +647,6 @@ async function toggleHistory(playerId) {
       : "Belum ada data riwayat mingguan untuk pemain ini.";
     panel.appendChild(percent);
 
-    const bar = document.createElement("div");
-    bar.style.cssText =
-      "height:12px;background:#26354d;border-radius:10px;margin:12px 0;overflow:hidden";
-
-    const fill = document.createElement("div");
-    fill.style.cssText =
-      `height:100%;width:${Math.max(0, Math.min(100, percentage))}%;background:${status === "Baik" ? "#35d399" : status === "Sedang" ? "#fbbf24" : status === "Buruk" ? "#fb7185" : "#71819c"};transition:width .3s`;
-    bar.appendChild(fill);
-    panel.appendChild(bar);
-
     // Diagram riwayat mingguan
 const chartBox = document.createElement("div");
 chartBox.style.cssText =
