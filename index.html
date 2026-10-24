@@ -830,6 +830,27 @@ const { data, error } = await db
   renderPlayers();
 }
 
+const secretTrigger = document.getElementById("admin-secret-trigger");
+const adminLoginSection = document.getElementById("admin-login");
+
+if (secretTrigger && adminLoginSection) {
+  secretTrigger.style.cursor = "pointer";
+  secretTrigger.title = "Buka Login Admin";
+
+  secretTrigger.addEventListener("click", () => {
+    const isHidden = getComputedStyle(adminLoginSection).display === "none";
+
+    adminLoginSection.style.display = isHidden ? "block" : "none";
+
+    if (isHidden) {
+      adminLoginSection.scrollIntoView({
+        behavior: "smooth",
+        block: "start"
+      });
+    }
+  });
+}
+
 loadPlayers();
 </script>
 </body>
