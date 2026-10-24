@@ -711,56 +711,33 @@ if (data && data.length > 0) {
         fill: true
       }]
     },
-    options: {
-  responsive: true,
-  maintainAspectRatio: false,
-  scales: {
-    y: {
-      min: 0,
-      max: 100,
-      ticks: {
-        stepSize: 20,
-        color: "#aab6cb",
-        callback: value => value + "%"
-      },
-      grid: {
-        color: "#26354d"
-      },
-      title: {
-        display: true,
-        text: "Persentase",
-        color: "#aab6cb"
-      }
-    }
-  },
-  plugins: {
-    legend: {
-      labels: {
-        color: "#dce6f7"
-      }
-    }
-  }
-}
+        options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
         y: {
-  min: 0,
-  max: 100,
-  ticks: {
-    stepSize: 20,
-    color: "#aab6cb",
-    callback: value => value + "%"
-  },
-  grid: { color: "#26354d" },
-  title: {
-    display: true,
-    text: "Persentase",
-    color: "#aab6cb"
-  }
-},
+          min: 0,
+          max: 100,
+          ticks: {
+            stepSize: 20,
+            color: "#aab6cb",
+            callback: value => value + "%"
+          },
+          grid: {
+            color: "#26354d"
+          },
+          title: {
+            display: true,
+            text: "Persentase",
+            color: "#aab6cb"
+          }
         }
       },
       plugins: {
         legend: {
-          labels: { color: "#dce6f7" }
+          labels: {
+            color: "#dce6f7"
+          }
         }
       }
     }
