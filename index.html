@@ -832,13 +832,66 @@ const { data, error } = await db
 
 const secretTrigger = document.getElementById("admin-secret-trigger");
 const adminLoginSection = document.getElementById("admin-login");
+const adminLoginForm = document.getElementById("admin-login-form");
+const adminEmail = document.getElementById("admin-email");
+const adminPassword = document.getElementById("admin-password");
+const adminMessage = document.getElementById("admin-login-message");
+const adminLogout = document.getElementById("admin-logout");
+
+let verifiedAdmin = false;
+
+adminLoginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  verifiedAdmin = false;
+  adminLogout.style.display = "none";
+  adminMessage.textContent = "Memeriksa akun...";
+
+  const { data, error } = await db.auth.signInWithPassword({
+    email: adminEmail.value.trim(),
+    password: adminPassword.value
+  });
+
+  if (error) {
+    adminMessage.textContent = "Login gagal: " + error.message;
+    return;
+  }
+
+  const { data: admin, error: adminError } = await db
+    .from("admins")
+    .select("user_id")
+    .eq("user_id", data.user.id)
+    .maybeSingle();
+
+  if (adminError || !admin) {
+    await db.auth.signOut();
+    adminMessage.textContent =
+      "Akun berhasil login, tetapi tidak terdaftar sebagai admin.";
+    return;
+  }
+
+  verifiedAdmin = true;
+  adminPassword.value = "";
+  adminLogout.style.display = "inline-block";
+  adminMessage.textContent =
+    "Login admin berhasil. Panel pengelolaan akan ditambahkan pada tahap berikutnya.";
+});
+
+adminLogout.addEventListener("click", async () => {
+  const { error } = await db.auth.signOut();
+  verifiedAdmin = false;
+  adminLogout.style.display = "none";
+  adminMessage.textContent = error
+    ? "Logout gagal: " + error.message
+    : "Kamu sudah logout.";
+});
 
 if (secretTrigger && adminLoginSection) {
   secretTrigger.style.cursor = "pointer";
   secretTrigger.title = "Buka Login Admin";
 
   secretTrigger.addEventListener("click", () => {
-    const isHidden = getComputedStyle(adminLoginSection).display === "none";
+    const isHidden =
+      getComputedStyle(adminLoginSection).display === "none";
 
     adminLoginSection.style.display = isHidden ? "block" : "none";
 
@@ -855,3 +908,4 @@ loadPlayers();
 </script>
 </body>
 </html>
+
