@@ -653,17 +653,17 @@ chartBox.style.cssText =
   "position:relative;width:100%;height:260px;margin-top:18px;max-width:100%";
 
 const canvas = document.createElement("canvas");
+canvas.id = "history-chart-" + playerId;
 chartBox.appendChild(canvas);
 panel.appendChild(chartBox);
-
 if (data && data.length > 0) {
   const lineColor =
     status === "Baik" ? "#35d399" :
     status === "Sedang" ? "#fbbf24" :
     status === "Buruk" ? "#fb7185" : "#71819c";
 
-  new Chart(canvas, {
-    type: "line",
+  new Chart(canvas.getContext("2d"), {
+  type: "line",
     data: {
       labels: data.map(item => item.week_start),
       datasets: [{
