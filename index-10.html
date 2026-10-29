@@ -1,0 +1,1925 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WORLD ENVY TOP PLAYER</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #080b14;
+      color: #f1f5ff;
+    }
+
+    header {
+      padding: 22px 7%;
+      background: #0d1220;
+      border-bottom: 1px solid #1c3155;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      color: #55aaff;
+      font-weight: bold;
+      font-size: 19px;
+    }
+
+    nav { display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+    nav a {
+      color: #c4d1e8;
+      text-decoration: none;
+      margin: 0;
+      padding: 10px 13px;
+      font-size: 13px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      border-radius: 9px;
+      transition: .2s ease;
+      white-space: nowrap;
+    }
+    nav a:hover, nav a.active {
+      color: #fff;
+      background: #142746;
+      border-color: #2c5b91;
+    }
+    .page-view { display:none; min-height:55vh; }
+    .page-view.active { display:block; }
+    .content-section { padding: 42px 7% 65px; }
+    .page-heading { margin-bottom: 22px; }
+    .page-heading h2 { font-size: clamp(25px, 4vw, 34px); margin: 10px 0; }
+    .page-heading p { color:#9eacc5; line-height:1.7; max-width:720px; }
+    .content-card { background:#0d1626; border:1px solid #263b5a; border-radius:15px; padding:20px; }
+    .content-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
+    .data-card { background:#0d1626; border:1px solid #263b5a; border-radius:13px; padding:18px; min-width:0; }
+    .data-card h3 { color:#eaf3ff; font-size:16px; margin-bottom:10px; overflow-wrap:anywhere; }
+    .data-card p { color:#aab6cb; font-size:14px; line-height:1.7; overflow-wrap:anywhere; }
+    .data-meta { color:#63b4ff !important; font-size:12px !important; margin-bottom:8px; }
+    .empty-state { padding:24px; text-align:center; color:#8796b0; border:1px dashed #2b3d59; border-radius:12px; line-height:1.7; }
+    .menu-button { display:inline-flex; align-items:center; justify-content:center; gap:8px; padding:11px 15px; color:#fff; background:#142746; border:1px solid #2c5b91; border-radius:9px; text-decoration:none; font-weight:700; font-size:13px; }
+
+    .hero {
+      padding: 75px 7% 55px;
+      background: radial-gradient(ellipse at top, #142c55, #080b14 70%);
+    }
+
+    .tag {
+      color: #63b4ff;
+      font-size: 12px;
+      letter-spacing: 3px;
+      font-weight: bold;
+    }
+
+    h1 {
+      font-size: clamp(35px, 7vw, 62px);
+      margin: 20px 0;
+      line-height: 1.1;
+    }
+
+    h1 span {
+      color: #55aaff;
+    }
+
+    .hero p {
+      color: #9eacc5;
+      max-width: 520px;
+      line-height: 1.7;
+      font-size: 15px;
+    }
+
+    .button {
+      display: inline-block;
+      margin-top: 25px;
+      padding: 13px 22px;
+      background: #2787ff;
+      color: white;
+      text-decoration: none;
+      border-radius: 8px;
+      font-weight: bold;
+    }
+
+    main {
+      padding: 35px 7% 65px;
+    }
+
+    .section-title {
+      font-size: 25px;
+      margin-bottom: 10px;
+    }
+
+    .muted {
+      color: #8796b0;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+
+    .search {
+      width: 100%;
+      margin: 25px 0;
+      padding: 15px;
+      background: #101827;
+      border: 1px solid #253754;
+      border-radius: 9px;
+      color: white;
+      font-size: 15px;
+      outline: none;
+    }
+
+    .search:focus {
+      border-color: #55aaff;
+    }
+
+    .table-wrap {
+      overflow-x: auto;
+      border: 1px solid #202f49;
+      border-radius: 12px;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      min-width: 480px;
+    }
+
+    th, td {
+      padding: 17px 15px;
+      text-align: left;
+      border-bottom: 1px solid #202b40;
+    }
+
+    th {
+      color: #77baff;
+      background: #111b2c;
+      font-size: 12px;
+      text-transform: uppercase;
+    }
+
+    td {
+      color: #dce6f7;
+      font-size: 14px;
+    }
+
+    tr:last-child td {
+      border-bottom: none;
+    }
+
+    .rank {
+      color: #63b4ff;
+      font-weight: bold;
+    }
+
+    .status { color: #61e5ac; font-weight: 700; }
+    .status-active { color:#34d399 !important; font-weight:700; }
+    .status-inactive { color:#fb7185 !important; font-weight:700; }
+    #admin-login { padding:32px 7%; background:#0d1220; border-top:1px solid #263b5a; }
+    .admin-login-card { max-width:460px; margin:0 auto; padding:26px; background:linear-gradient(145deg,#111c30,#0b1220); border:1px solid #263b5a; border-radius:18px; box-shadow:0 18px 45px #0004; }
+    .admin-login-card h2 { margin:0 0 8px; font-size:26px; }
+    .admin-login-subtitle { margin:0 0 22px; color:#9eacc5; line-height:1.6; }
+    #admin-login-form { display:grid; gap:10px; }
+    #admin-login-form label { color:#cbd8ec; font-size:13px; font-weight:600; margin-top:4px; }
+    #admin-login-form input { box-sizing:border-box; width:100%; padding:13px 14px; background:#080f1c; border:1px solid #2b3d59; border-radius:10px; color:#fff; outline:none; }
+    #admin-login-form input:focus { border-color:#4297ff; box-shadow:0 0 0 3px #2787ff22; }
+    #admin-login-form button { padding:12px 16px; border:0; border-radius:10px; background:#2787ff; color:#fff; font-weight:700; cursor:pointer; }
+    #admin-login-form #admin-logout { background:#263449; }
+    #admin-login-message { margin:4px 0 0; color:#aab8cf; line-height:1.5; overflow-wrap:anywhere; }
+    @media(max-width:500px) { .admin-login-card { padding:20px; } }
+.features {
+  padding: 38px 7%;
+  border-top: 1px solid #1c2b43;
+}
+
+.features h2 {
+  font-size: clamp(24px, 6vw, 32px);
+  line-height: 1.25;
+  margin: 10px 0 12px;
+  letter-spacing: -0.5px;
+  overflow-wrap: anywhere;
+}
+
+.features > p {
+  color: #aab6cb;
+  font-size: 15px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+
+.feature-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+}
+
+.feature-item {
+  display:block;
+  width: 100%;
+  min-width: 0;
+  padding: 18px;
+  background: #0d1626;
+  border: 1px solid #263b5a;
+  border-radius: 16px;
+}
+.feature-link { color:inherit; text-decoration:none; transition:transform .2s ease,border-color .2s ease,background .2s ease; }
+.feature-link:hover { transform:translateY(-2px); border-color:#4a8bd2; background:#101e33; }
+.feature-link span { display:inline-block; margin-top:10px; color:#63b4ff; font-size:12px; font-weight:700; }
+
+
+.feature-item h3 {
+  color: #63b4ff;
+  font-size: 18px;
+  line-height: 1.4;
+  margin-bottom: 10px;
+}
+
+.feature-item p {
+  color: #aab6cb;
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-wrap: anywhere;
+}
+
+.features .feature-note {
+  color: #aab6cb;
+  font-size: 14px;
+  line-height: 1.7;
+  margin-top: 18px;
+}
+
+@media (max-width: 500px) {
+  .features {
+    padding: 30px 20px;
+  }
+
+  .features h2 {
+    font-size: 25px;
+    line-height: 1.3;
+  }
+
+  .features > p {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  .feature-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .feature-item {
+    padding: 16px;
+  }
+
+  .feature-item h3 {
+    font-size: 17px;
+  }
+}
+
+.player-name-wrap {
+  display: inline-flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.player-title {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 9px;
+  border: 1px solid #b88b32;
+  border-radius: 7px;
+  background: linear-gradient(135deg, #33250b, #17130a, #493612);
+  color: #f5d77d;
+  font-size: 11px;
+  font-weight: bold;
+  line-height: 1.4;
+  white-space: nowrap;
+  box-shadow: 0 0 9px #d4a72c33;
+}
+
+.player-title .wing {
+  color: #e9c766;
+  font-size: 15px;
+  display: inline-block;
+}
+
+.player-title.rgb-active .title-text {
+  background: linear-gradient(
+    90deg,
+    #ff4545,
+    #ffb52e,
+    #f8ff55,
+    #39ff88,
+    #35d9ff,
+    #6975ff,
+    #d75cff,
+    #ff4545
+  );
+  background-size: 300% 100%;
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+  animation: title-rgb-flow 4s linear infinite;
+}
+
+@keyframes title-rgb-flow {
+  from {
+    background-position: 100% 50%;
+  }
+  to {
+    background-position: 0% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .player-title.rgb-active .title-text {
+    animation: none;
+  }
+}
+    
+    .empty {
+      padding: 25px;
+      text-align: center;
+      color: #8796b0;
+      display: none;
+    }
+
+    
+footer {
+  padding: 25px 7%;
+  text-align: center;
+  border-top: 1px solid #1c2b43;
+  color: #71819c;
+  font-size: 12px;
+}
+
+@media (max-width: 500px) {
+  header {
+    padding: 20px;
+  }
+
+  nav { gap:6px; }
+  nav a { padding:8px 10px; font-size:12px; }
+  .content-section { padding:32px 20px 48px; }
+  .content-grid { grid-template-columns:1fr; }
+
+  .hero {
+    padding: 55px 20px 40px;
+  }
+
+  main {
+    padding: 30px 20px 50px;
+  }
+
+  .features {
+    padding: 30px 20px;
+  }
+
+.features h2 {
+    font-size: 25px;
+    line-height: 1.3;
+  }
+
+  .features > p {
+    font-size: 14px;
+    margin-bottom: 18px;
+  }
+
+  .feature-list {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+
+  .feature-item {
+    padding: 16px;
+  }
+
+  .feature-item h3 {
+    font-size: 17px;
+  }
+}
+
+
+/* WORLD ENVY responsive sunset theme + sidebar navigation */
+:root { --bg:#090711; --panel:#171222; --panel2:#29213B; --line:#49365f; --text:#F0EAFB; --muted:#c9bfd9; --red:#C4A0FF; --orange:#9B6DFF; --blue:#C4A0FF; }
+body { background:var(--bg); color:var(--text); }
+header { position:sticky; top:0; z-index:50; justify-content:flex-start; background:#090711ee; border-bottom:1px solid #49365f; backdrop-filter:blur(12px); padding:14px 22px; }
+.logo { color:#C4A0FF; flex:1; }
+nav { display:none; }
+#sidebar-toggle { display:inline-flex; align-items:center; justify-content:center; width:42px; height:42px; border:1px solid #6f4b9a; border-radius:10px; background:#21172f; color:#fff; font-size:22px; cursor:pointer; }
+#site-sidebar { position:fixed; z-index:100; top:0; left:0; bottom:0; width:min(290px,84vw); padding:22px 16px; background:#100D18; border-right:1px solid #49365f; box-shadow:18px 0 45px #0008; transform:translateX(-105%); transition:transform .22s ease; overflow-y:auto; }
+#site-sidebar.open { transform:translateX(0); }
+#sidebar-backdrop { display:none; position:fixed; inset:0; z-index:90; background:#0009; }
+#sidebar-backdrop.open { display:block; }
+.sidebar-heading { color:#C4A0FF; font-size:12px; letter-spacing:2px; font-weight:800; margin:12px 10px 18px; }
+#site-sidebar a { display:block; padding:13px 12px; margin:5px 0; color:#d8cdd1; text-decoration:none; border:1px solid transparent; border-radius:10px; font-weight:700; font-size:14px; }
+#site-sidebar a:hover, #site-sidebar a.active { color:#fff; background:linear-gradient(100deg,#352044,#21172f); border-color:#9B6DFF; }
+/* Event Hub is intentionally highlighted separately from the other sidebar links. */
+#site-sidebar a.event-hub-link { position:relative; isolation:isolate; overflow:hidden; border:1px solid #6f4b9a; background:linear-gradient(110deg,#21172f,#39234e,#171222); color:#fff; box-shadow:0 0 14px #9B6DFF22; }
+#site-sidebar a.event-hub-link::before { content:""; position:absolute; z-index:-1; inset:-60% -30%; background:linear-gradient(105deg,transparent 35%,#ffffff18 45%,#C4A0FF55 50%,transparent 62%); transform:translateX(-70%) rotate(8deg); animation:eventHubFlow 5s ease-in-out infinite; pointer-events:none; }
+#site-sidebar a.event-hub-link:hover, #site-sidebar a.event-hub-link.active { border-color:#C4A0FF; box-shadow:0 0 18px #9B6DFF44; }
+@keyframes eventHubFlow { 0%,100% { transform:translateX(-70%) rotate(8deg); } 50% { transform:translateX(70%) rotate(8deg); } }
+.hero { background:radial-gradient(ellipse at top, #352044, #090711 72%); }
+.tag, .feature-item h3, th, .rank { color:var(--blue); }
+h1 span { color:var(--red); }
+.button { background:linear-gradient(110deg,#9B6DFF,#C4A0FF); color:#100D18; }
+.search { background:#111119; border-color:#3b3038; }
+.search:focus { border-color:#9B6DFF; }
+.table-wrap, .content-card, .data-card, .feature-item { border-color:#49365f; }
+.content-card, .data-card, .feature-item { background:linear-gradient(145deg,#21172f,#100D18); }
+th { background:#29213B; }
+.status-active { color:#22c55e !important; font-weight:700; }
+.status-inactive { color:#ef4444 !important; font-weight:700; }
+.page-view { min-height:0; }
+.content-section { padding-bottom:36px; }
+main { padding-bottom:34px; }
+.features { padding-bottom:28px; }
+footer { margin-top:0; }
+.feature-link { cursor:default; }
+.feature-link:hover { transform:none; border-color:#49365f; background:linear-gradient(145deg,#21172f,#100D18); }
+.feature-link span { display:none; }
+@media(min-width:900px) { .feature-list { grid-template-columns:repeat(3,minmax(0,1fr)); } }
+@media(max-width:650px) { header { padding:12px 16px; } .logo { font-size:16px; } .hero { padding:48px 20px 36px; } .content-section { padding:28px 18px 32px; } #admin-panel { padding:25px 18px !important; } }
+@media(prefers-reduced-motion:reduce) { #site-sidebar { transition:none; } }
+
+    .clan-banner-wrap{width:min(720px,90vw);aspect-ratio:16/9;margin:0 auto 10px;position:relative;border:1px solid #49365f;border-radius:18px;overflow:hidden;background:#111018;box-shadow:0 12px 35px #0008}
+    .clan-banner-track{position:absolute;inset:0;display:flex;width:100%;height:100%;transition:transform .75s cubic-bezier(.22,.75,.25,1);will-change:transform}.clan-banner-track img{flex:0 0 100%;width:100%;height:100%;object-fit:cover;display:block;min-width:100%}
+    .clan-banner-placeholder{height:100%;display:grid;place-items:center;text-align:center;padding:20px;color:#b8aab0;font-size:14px;line-height:1.6}
+    .banner-slide-dots{display:flex;justify-content:center;gap:8px;margin:0 auto 18px}
+    .banner-slide-dot{width:9px;height:9px;padding:0;border:1px solid #9B6DFF;border-radius:50%;background:#29213B;cursor:pointer}
+    .banner-slide-dot.active{background:#C4A0FF;box-shadow:0 0 10px #9B6DFF}
+    .banner-admin-tools{display:none;gap:8px;justify-content:center;align-items:center;flex-wrap:wrap;margin:12px auto 18px}
+    .banner-admin-tools button,.banner-admin-tools select{border:1px solid #5a456f;background:#241b32;color:#fff;padding:9px 12px;border-radius:8px;cursor:pointer}
+    .banner-admin-tools select{max-width:160px}
+    .data-meta .crime-level{font-weight:800}
+    .crime-musang{color:#ffad5a}.crime-danger{color:#ff6868}.crime-kakap{color:#d92d46}
+    .admin-subpanel{margin-top:28px;padding-top:22px;border-top:1px solid #3b3038}
+    .admin-subpanel input,.admin-subpanel textarea,.admin-subpanel select{box-sizing:border-box;width:100%;padding:11px;background:#101016;border:1px solid #49303a;border-radius:8px;color:#fff}
+    .admin-subpanel button{padding:10px 13px;border:0;border-radius:8px;background:#a73545;color:#fff;cursor:pointer;font-weight:700}
+    @media(max-width:650px){.clan-banner-wrap{width:min(92vw,560px);aspect-ratio:16/9}}
+
+    /* Shadow Rises Event Hub: isolated flowing purple/white/black event marker and event card. */
+    .event-hub-card{position:relative;isolation:isolate;overflow:hidden;max-width:850px;min-height:220px;border:1px solid #7650a4;border-radius:18px;background:linear-gradient(120deg,#090711 5%,#21172f 45%,#352044 70%,#100D18);box-shadow:0 16px 42px #0007,0 0 24px #9B6DFF18}
+    .event-hub-card::before{content:"";position:absolute;z-index:-1;inset:-80% -35%;background:linear-gradient(110deg,transparent 34%,#ffffff10 44%,#C4A0FF35 49%,#9B6DFF22 53%,transparent 64%);animation:eventHubCardFlow 8s ease-in-out infinite}
+    .event-hub-card::after{content:"";position:absolute;z-index:-1;width:240px;height:240px;right:-60px;top:-90px;border-radius:50%;background:#9B6DFF1c;filter:blur(25px);animation:eventHubOrb 7s ease-in-out infinite alternate}
+    .event-hub-card-content{padding:28px;max-width:650px}
+    .event-hub-kicker{display:inline-block;color:#C4A0FF;font-size:11px;font-weight:800;letter-spacing:2.5px;margin-bottom:12px}
+    .event-hub-card h3{font-size:clamp(23px,4vw,34px);letter-spacing:1.5px;color:#F0EAFB;margin-bottom:10px;text-shadow:0 0 20px #C4A0FF44}
+    .event-hub-card p{max-width:560px;color:#d1c6e0;font-size:14px;line-height:1.75}
+    .event-hub-status{display:inline-flex;align-items:center;gap:8px;margin-top:18px;padding:8px 11px;border:1px solid #7650a477;border-radius:999px;background:#09071188;color:#e8dcfa;font-size:10px;font-weight:800;letter-spacing:.7px}
+    .event-hub-status-dot{width:7px;height:7px;border-radius:50%;background:#C4A0FF;box-shadow:0 0 10px #C4A0FF;animation:eventHubPulse 2s ease-in-out infinite}
+    @keyframes eventHubCardFlow{0%,100%{transform:translateX(-35%) rotate(8deg)}50%{transform:translateX(35%) rotate(8deg)}}
+    @keyframes eventHubOrb{from{transform:translate(-10px,0) scale(.9)}to{transform:translate(8px,18px) scale(1.12)}}
+    @keyframes eventHubPulse{0%,100%{opacity:.65}50%{opacity:1}}
+    @media(max-width:650px){.event-hub-card-content{padding:22px 18px}.event-hub-card{min-height:200px}}
+    @media(prefers-reduced-motion:reduce){#site-sidebar a.event-hub-link::before,.event-hub-card::before,.event-hub-card::after,.event-hub-status-dot{animation:none}}
+
+
+    /* Shadow Memory mini-game */
+    .shadow-start-button,.shadow-secondary-button{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin-top:14px;padding:12px 17px;border-radius:10px;border:1px solid #9B6DFF;background:linear-gradient(110deg,#9B6DFF,#C4A0FF);color:#100D18;font-weight:850;cursor:pointer;box-shadow:0 0 18px #9B6DFF24;transition:transform .18s ease,box-shadow .18s ease}
+    .shadow-start-button:hover,.shadow-secondary-button:hover{transform:translateY(-2px);box-shadow:0 0 24px #9B6DFF55}
+    .shadow-secondary-button{margin:0;background:#171222;color:#F0EAFB;border-color:#49365f;box-shadow:none}
+    .shadow-game{position:relative;max-width:850px;margin:24px auto 0;padding:clamp(16px,4vw,28px);border:1px solid #49365f;border-radius:18px;background:radial-gradient(ellipse at top,#29213B 0%,#100D18 52%,#090711 100%);box-shadow:0 20px 50px #0007;overflow:hidden}
+    .shadow-game[hidden],.shadow-overlay[hidden]{display:none!important}
+    .shadow-game-top{display:flex;justify-content:space-between;align-items:flex-start;gap:15px}.shadow-eyebrow{font-size:10px;letter-spacing:2px;font-weight:900;color:#C4A0FF}.shadow-game-top h3{font-size:clamp(22px,5vw,32px);letter-spacing:1.5px;color:#F0EAFB;margin:8px 0}.shadow-game-top p,.shadow-overlay-card p{font-size:13px;line-height:1.6;color:#c9bfd9;max-width:520px}
+    .shadow-stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin:20px 0 12px}.shadow-stats>div{padding:12px;border:1px solid #49365f;border-radius:11px;background:#090711aa}.shadow-stats span{display:block;font-size:9px;letter-spacing:1.4px;color:#b5a7ca;font-weight:800}.shadow-stats strong{display:block;margin-top:5px;font-size:clamp(19px,4vw,26px);color:#F0EAFB;font-variant-numeric:tabular-nums}
+    .shadow-message{text-align:center;min-height:24px;color:#C4A0FF;font-size:13px;font-weight:750;margin:12px 0 16px}.shadow-board{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.shadow-card{position:relative;min-width:0;aspect-ratio:3/3.6;padding:0;border:1px solid #6b4c8b;border-radius:12px;background:linear-gradient(145deg,#29213B,#100D18 70%);color:#F0EAFB;cursor:pointer;overflow:hidden;box-shadow:inset 0 0 18px #9B6DFF0c,0 5px 14px #0003;transition:transform .22s ease,border-color .22s ease,background .22s ease}.shadow-card::before{content:"✧";position:absolute;inset:0;display:grid;place-items:center;font-size:clamp(24px,6vw,40px);color:#9B6DFF;text-shadow:0 0 14px #9B6DFF88;background:repeating-linear-gradient(135deg,transparent 0 12px,#ffffff04 12px 13px)}.shadow-card:hover:not(:disabled){transform:translateY(-3px);border-color:#C4A0FF}.shadow-card .shadow-symbol{display:none;font-size:clamp(25px,7vw,42px);filter:drop-shadow(0 0 9px #C4A0FF55)}.shadow-card.is-revealed,.shadow-card.is-matched,.shadow-card.is-bomb{background:linear-gradient(145deg,#21172f,#090711)}.shadow-card.is-revealed::before,.shadow-card.is-matched::before,.shadow-card.is-bomb::before{display:none}.shadow-card.is-revealed .shadow-symbol,.shadow-card.is-matched .shadow-symbol,.shadow-card.is-bomb .shadow-symbol{display:block}.shadow-card.is-matched{border-color:#8b6bc0;box-shadow:inset 0 0 20px #9B6DFF20}.shadow-card.is-bomb{border-color:#e24b78;box-shadow:inset 0 0 25px #e24b7833}.shadow-card:disabled{cursor:default}.shadow-overlay{position:absolute;z-index:5;inset:0;display:grid;place-items:center;padding:20px;background:#090711d9;backdrop-filter:blur(8px)}.shadow-overlay-card{width:min(100%,420px);padding:25px;border:1px solid #7650a4;border-radius:16px;text-align:center;background:linear-gradient(145deg,#21172f,#090711);box-shadow:0 0 45px #9B6DFF22}.shadow-overlay-card h4{font-size:25px;color:#F0EAFB;margin:10px 0}.shadow-overlay-card p{margin:0 auto 12px}.shadow-footnote{font-size:11px;line-height:1.6;color:#9488a8;margin:17px 0 0;text-align:center}
+    @media(max-width:480px){.shadow-game-top{flex-direction:column}.shadow-game-top .shadow-secondary-button{align-self:flex-start}.shadow-board{gap:7px}.shadow-card{border-radius:9px}.shadow-stats{gap:7px}.shadow-stats>div{padding:10px 8px}}
+    @media(prefers-reduced-motion:reduce){.shadow-card,.shadow-start-button,.shadow-secondary-button{transition:none}}
+
+    /* Community pages: clean, responsive layout while preserving the existing theme. */
+    #header-copyright{display:none;margin-left:auto;color:#9eacc5;font-size:11px;line-height:1.4;text-align:right;max-width:250px}
+    header{display:flex;align-items:center;gap:12px}
+    .content-section{max-width:1200px;margin:0 auto;width:100%;box-sizing:border-box}
+    .content-grid{align-items:stretch;gap:18px}
+    .data-card{display:flex;flex-direction:column;gap:5px;padding:20px;box-shadow:0 10px 26px #0002}
+    .data-card .data-meta{display:flex;flex-wrap:wrap;align-items:center;gap:7px;color:#ffad5a!important;letter-spacing:.4px}
+    .data-card h3{font-size:18px;line-height:1.45;margin:2px 0 6px;overflow-wrap:anywhere}
+    .data-card .data-body{white-space:pre-wrap;overflow-wrap:anywhere;margin:0}
+    .data-card .data-date{color:#d8cbd0!important;font-size:13px!important}
+    .admin-subpanel{background:#111016;border:1px solid #3b3038;border-radius:14px;padding:20px;margin-top:24px}
+    .admin-subpanel h2{font-size:clamp(20px,3vw,26px);margin:0 0 16px}
+    .admin-subpanel form{width:100%;max-width:none!important;box-sizing:border-box;grid-template-columns:1fr}
+    .admin-subpanel label{display:block;color:#e5dbe0;font-size:13px;font-weight:700;margin-top:4px}
+    .admin-subpanel input:not([type=checkbox]),.admin-subpanel textarea,.admin-subpanel select{min-width:0;box-sizing:border-box;width:100%;padding:12px;background:#101016;border:1px solid #49303a;border-radius:8px;color:#fff}
+    .admin-subpanel textarea{resize:vertical;line-height:1.5}
+    .admin-subpanel input[type=checkbox]{width:auto;accent-color:#d94b60}
+    .admin-subpanel button{padding:10px 13px;border:0;border-radius:8px;background:#a73545;color:#fff;cursor:pointer;font-weight:700}
+    .admin-subpanel .table-wrap{max-width:100%;overflow-x:auto;margin-top:18px}
+    #blacklist-admin-rows td,#community-admin-rows td{vertical-align:top;overflow-wrap:anywhere}
+    footer{transition:opacity .15s ease}
+    @media(max-width:650px){
+      #header-copyright{font-size:9px;max-width:135px}
+      .content-section{padding:26px 16px 30px}
+      .content-grid{grid-template-columns:1fr;gap:12px}
+      .data-card{padding:16px;border-radius:12px}
+      .admin-subpanel{padding:15px;margin-top:18px}
+      .admin-subpanel .table-wrap table{min-width:520px}
+      header .logo{max-width:58vw;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+    }
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <button id="sidebar-toggle" type="button" aria-label="Buka menu" aria-expanded="false">☰</button>
+    <div class="logo">𓆩 WORLD ENVY 𓆪</div>
+    <span id="header-copyright">© 2026 WORLD ENVY TOP PLAYER · Community Project</span>
+  </header>
+  <div id="sidebar-backdrop"></div>
+  <aside id="site-sidebar" aria-label="Navigasi utama">
+    <div class="sidebar-heading">WORLD ENVY MENU</div>
+    <a href="#home" class="active" data-view="home-view">⌂ Home</a>
+    <a href="#leaderboard" data-view="home-view" data-scroll="leaderboard">♛ Top Leaderboard</a>
+    <a href="#player-blacklist" data-view="blacklist-view">⊘ Player Blacklist</a>
+    <a href="#event-announcement" data-view="community-view">▣ Event / Announcement</a>
+    <a href="#event-hub" class="event-hub-link" data-view="event-hub-view">✦ Event Hub</a>
+  </aside>
+
+  <div id="home-view" class="page-view active">
+  <section class="hero" id="home">
+     
+<div class="clan-banner-wrap" id="clan-banner-wrap"><div class="clan-banner-placeholder" id="clan-banner-placeholder">𓆩 WORLD ENVY 𓆪<br>Banner Clan</div><div class="clan-banner-track" id="clan-banner-track" style="transform:translateX(0)"></div></div>
+<div class="banner-slide-dots" id="banner-slide-dots" aria-label="Pilih banner"></div>
+<div class="banner-admin-tools" id="banner-admin-tools"><label for="banner-slot-select">Slot banner</label><select id="banner-slot-select"><option value="1">Banner 1</option><option value="2">Banner 2</option><option value="3">Banner 3</option></select><input id="banner-file-input" type="file" accept="image/jpeg,image/png,image/webp" hidden><button type="button" id="banner-upload-button">Pilih / Ganti Banner</button><button type="button" id="banner-delete-button">Hapus Banner Terpilih</button><span id="banner-message" role="status"></span></div>
+<div class="tag">PUSAT DATA PEMAIN RESMI</div>
+
+<h1>WORLD ENVY<br><span>TOP PLAYER DONATE</span></h1>
+
+<p>
+  Tempat buat melihat siapa aja pemain terbaik di WORLD ENVY!
+  Pantau skor, cek riwayat pemain, dan ikuti perkembangan
+  komunitas di sini.
+</p>
+
+<a class="button" href="#leaderboard">Jelajahi Pemain ↗</a>
+
+</section>
+
+<section class="features">
+  <div class="tag">TENTANG CLAN</div>
+
+  <h2>APA AJA YANG ADA DI SINI?</h2>
+  <p>
+    Semua fitur dan informasi Clan ada di sini. Cek peringkat,
+    riwayat pemain, event, sampai pengumuman komunitas.
+  </p>
+    <div class="feature-list">
+    <div class="feature-item">
+      <h3>01. Top Player</h3>
+      <p>Lihat daftar pemain dengan skor tertinggi dan siapa yang memimpin peringkat.</p>
+    </div>
+     <div class="feature-item">
+      <h3>02. Riwayat Pemain</h3>
+      <p>Cek persentase riwayat, status, dan keterangan di profil pemain.</p>
+    </div>
+
+    <div class="feature-item">
+      <h3>03. Events</h3>
+      <p>Lihat jadwal kegiatan dan informasi event komunitas.</p>
+    </div>
+
+    <div class="feature-item">
+      <h3>04. Announcements</h3>
+      <p>Pantau pengumuman terbaru supaya nggak ketinggalan info penting.</p>
+    </div>
+
+    <div class="feature-item">
+      <h3>05. Player Blacklist</h3>
+      <p>Lihat daftar pemain yang masuk blacklist beserta alasannya.</p>
+    </div>
+
+    <div class="feature-item">
+      <h3>06. Update Komunitas</h3>
+      <p>Ikuti perkembangan dan informasi WORLD ENVY di sini.</p>
+    </div>
+  </div>
+
+  <p class="feature-note">
+    Informasi ditampilkan berdasarkan data yang tersedia
+    dan dikelola oleh admin WORLD ENVY.
+  </p>
+</section>
+
+  <main id="leaderboard">
+    <h2 class="section-title">Player Leaderboard</h2>
+    <p class="muted">
+      Lihat daftar pemain berdasarkan skor tertinggi dan temukan siapa yang memimpin persaingan di WORLD ENVY.
+    </p>
+
+    <input
+      class="search"
+      type="search"
+      id="search"
+      placeholder="Cari nama pemain..."
+      aria-label="Cari nama pemain"
+    >
+
+    <div class="table-wrap">
+      <table>
+        <thead>
+          <tr>
+            <th>Rank</th>
+            <th>Player</th>
+            <th>Points</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="players">
+          <tr>
+            <td class="rank">#1</td>
+            <td>Player Example 01</td>
+            <td>0</td>
+            <td class="status">Active</td>
+          </tr>
+          <tr>
+            <td class="rank">#2</td>
+            <td>Player Example 02</td>
+            <td>0</td>
+            <td class="status">Active</td>
+          </tr>
+          <tr>
+            <td class="rank">#3</td>
+            <td>Player Example 03</td>
+            <td>0</td>
+            <td class="status">Active</td>
+          </tr>
+        </tbody>
+      </table>
+      <div class="empty" id="empty">
+            Pemain tidak ditemukan.
+      </div>
+    </div>
+  </main>
+
+  </div>
+
+  <section id="blacklist-view" class="page-view content-section" aria-labelledby="blacklist-title">
+    <div class="page-heading">
+      <div class="tag">DATA KOMUNITAS</div>
+      <h2 id="blacklist-title">Player Blacklist</h2>
+      <p>Daftar User ID yang masuk blacklist beserta alasan yang tercatat. Halaman ini hanya untuk melihat informasi.</p>
+    </div>
+    <div id="blacklist-content" class="content-grid"><div class="empty-state">Memuat data blacklist...</div></div>
+  </section>
+
+  <section id="community-view" class="page-view content-section" aria-labelledby="community-title">
+    <div class="page-heading">
+      <div class="tag">INFO WORLD ENVY</div>
+      <h2 id="community-title">Event / Announcement</h2>
+      <p>Jadwal kegiatan dan pengumuman penting komunitas WORLD ENVY ada di sini.</p>
+    </div>
+    <div id="community-content" class="content-grid"><div class="empty-state">Memuat event dan pengumuman...</div></div>
+  </section>
+
+  <section id="event-hub-view" class="page-view content-section" aria-labelledby="event-hub-title">
+    <div class="page-heading">
+      <div class="tag">WORLD ENVY EVENT CENTER</div>
+      <h2 id="event-hub-title">Event Hub</h2>
+      <p>Pusat event WORLD ENVY. Pilih event untuk melihat detail dan aktivitas yang tersedia.</p>
+    </div>
+    <article class="event-hub-card">
+      <div class="event-hub-card-glow" aria-hidden="true"></div>
+      <div class="event-hub-card-content">
+        <span class="event-hub-kicker">SHADOW RISES EVENT</span>
+        <h3>SHADOW RISES</h3>
+        <p>Masuki Shadow Realm, buka kartu misterius, temukan pasangan rune, dan hindari cursed core yang tersembunyi.</p>
+        <div class="event-hub-status"><span class="event-hub-status-dot"></span> SHADOW MEMORY · SIAP DIMAINKAN</div>
+        <button type="button" class="shadow-start-button" id="shadow-start-button">✦ Masuki Shadow Memory</button>
+      </div>
+    </article>
+    <section id="shadow-memory-game" class="shadow-game" aria-label="Permainan Shadow Memory" hidden>
+      <div class="shadow-game-top"><div><div class="shadow-eyebrow">SHADOW REALM // MEMORY TRIAL</div><h3>SHADOW MEMORY</h3><p>Ingat simbolnya. Temukan pasangannya. Jangan bangunkan cursed core.</p></div><button type="button" id="shadow-exit-button" class="shadow-secondary-button">← Keluar</button></div>
+      <div class="shadow-stats"><div><span>SKOR</span><strong id="shadow-score">0</strong></div><div><span>LEVEL</span><strong id="shadow-level">1</strong></div><div><span>PASANGAN</span><strong id="shadow-pairs">0 / 4</strong></div></div>
+      <p id="shadow-message" class="shadow-message" aria-live="polite">Pilih kartu untuk memulai.</p>
+      <div id="shadow-board" class="shadow-board" aria-label="Kartu Shadow Memory"></div>
+      <div id="shadow-overlay" class="shadow-overlay" hidden><div class="shadow-overlay-card"><div class="shadow-eyebrow" id="shadow-overlay-kicker">TRIAL COMPLETE</div><h4 id="shadow-overlay-title">Level selesai</h4><p id="shadow-overlay-text">Bersiap untuk tantangan berikutnya.</p><button type="button" id="shadow-continue-button" class="shadow-start-button">Lanjut ke level berikutnya</button><button type="button" id="shadow-replay-button" class="shadow-secondary-button" hidden>Mulai ulang</button></div></div>
+      <p class="shadow-footnote">+50 setiap kartu dibuka · +100 bonus pasangan · Bom langsung mengakhiri permainan. Tidak ada batas waktu.</p>
+    </section>
+  </section>
+
+  <section id="admin-login" style="display:none">
+  <div class="admin-login-card">
+  <h2>Login Admin</h2>
+  <p class="admin-login-subtitle">Masuk untuk mengelola data pemain dan statistik.</p>
+  <form id="admin-login-form">
+    <label for="admin-email">Email</label>
+    <input id="admin-email" type="email" required placeholder="Email admin">
+
+    <label for="admin-password">Password</label>
+    <input id="admin-password" type="password" required placeholder="Password admin">
+
+    <button type="submit">Masuk</button>
+    <button type="button" id="admin-logout" style="display:none">Keluar</button>
+
+    <p id="admin-login-message"></p>
+  </form>
+  </div>
+</section>
+
+<section id="admin-panel" style="display:none;padding:30px 7%;background:#0a1020;border-top:1px solid #263b5a">
+  <h2 style="margin-bottom:8px">Panel Pengelolaan Admin</h2>
+  <p style="color:#9eacc5;line-height:1.6;margin-bottom:22px">Kelola nama pemain, skor, status, dan statistik.</p>
+  <form id="player-admin-form" style="display:grid;gap:12px;max-width:600px;margin-bottom:24px">
+    <input id="edit-player-id" type="hidden">
+    <label for="player-admin-name">Nama pemain</label>
+    <input id="player-admin-name" type="text" required maxlength="100" placeholder="Masukkan nama pemain" style="padding:12px;background:#101827;border:1px solid #253754;border-radius:8px;color:white">
+    <label for="player-admin-status">Status pemain</label>
+    <select id="player-admin-status" required style="padding:12px;background:#101827;border:1px solid #253754;border-radius:8px;color:white">
+      <option value="Aktif">Aktif</option>
+      <option value="Tidak Aktif">Tidak Aktif</option>
+    </select>
+    <label for="player-admin-score">Skor</label>
+    <input id="player-admin-score" type="number" min="0" step="1" required value="0" placeholder="0" style="padding:12px;background:#101827;border:1px solid #253754;border-radius:8px;color:white">
+    <label for="player-admin-title">Title/badge (opsional)</label>
+    <input id="player-admin-title" type="text" maxlength="60" placeholder="Misalnya: MVP" style="padding:12px;background:#101827;border:1px solid #253754;border-radius:8px;color:white">
+    <label style="display:flex;gap:8px;align-items:center"><input id="player-admin-rgb" type="checkbox"> Aktifkan efek RGB pada badge</label>
+    <div style="display:flex;gap:10px;flex-wrap:wrap">
+      <button id="player-admin-save" type="submit" style="padding:11px 16px;background:#2787ff;color:white;border:0;border-radius:8px;font-weight:bold;cursor:pointer">Tambah pemain</button>
+      <button id="player-admin-cancel" type="button" style="display:none;padding:11px 16px;background:#263449;color:white;border:0;border-radius:8px;cursor:pointer">Batal edit</button>
+    </div>
+    <p id="player-admin-message" role="status" style="color:#9eacc5;line-height:1.5"></p>
+  </form>
+  <h3 style="margin-bottom:12px">Data pemain</h3>
+  <div class="table-wrap"><table style="min-width:560px"><thead><tr><th>Nama</th><th>Skor</th><th>Status</th><th>Aksi</th></tr></thead><tbody id="admin-players"></tbody></table></div>
+
+  <div style="margin-top:36px;padding-top:26px;border-top:1px solid #263b5a">
+    <h2 style="margin-bottom:8px">Kelola Statistik &amp; Keterangan Player</h2>
+    <p style="color:#9eacc5;line-height:1.6;margin-bottom:20px">Pilih pemain, masukkan persentase riwayat mingguan, dan tulis keterangan yang akan tampil di detail pemain. Status ditentukan otomatis dari persentase.</p>
+    <form id="history-admin-form" style="display:grid;gap:12px;max-width:650px;margin-bottom:22px">
+      <input id="history-admin-id" type="hidden">
+      <label for="history-admin-player">Pilih player</label>
+      <select id="history-admin-player" required style="padding:12px;background:#101827;border:1px solid #253754;border-radius:8px;color:white"><option value="">Memuat player...</option></select>
+      <label for="history-admin-week">Tanggal minggu (week start)</label>
+      <input id="history-admin-week" type="date" required style="padding:12px;background:#101827;border:1px solid #253754;border-radius:8px;color:white">
+      <label for="history-admin-percent">Persentase riwayat (0–100)</label>
+      <input id="history-admin-percent" type="number" min="0" max="100" step="1" required placeholder="Contoh: 85" style="padding:12px;background:#101827;border:1px solid #253754;border-radius:8px;color:white">
+      <p id="history-admin-status-preview" style="color:#35d399">Status: —</p>
+      <label for="history-admin-description">Keterangan player</label>
+      <textarea id="history-admin-description" rows="4" maxlength="2000" placeholder="Tulis catatan, evaluasi, atau alasan status player..." style="padding:12px;background:#101827;border:1px solid #253754;border-radius:8px;color:white;resize:vertical"></textarea>
+      <div style="display:flex;gap:10px;flex-wrap:wrap">
+        <button id="history-admin-save" type="submit" style="padding:11px 16px;background:#2787ff;color:white;border:0;border-radius:8px;font-weight:bold;cursor:pointer">Tambah statistik</button>
+        <button id="history-admin-cancel" type="button" style="display:none;padding:11px 16px;background:#263449;color:white;border:0;border-radius:8px;cursor:pointer">Batal edit</button>
+        <button id="history-admin-refresh" type="button" style="padding:11px 16px;background:#263449;color:white;border:0;border-radius:8px;cursor:pointer">Muat ulang data</button>
+      </div>
+      <p id="history-admin-message" role="status" style="color:#9eacc5;line-height:1.5"></p>
+    </form>
+    <h3 style="margin-bottom:12px">Riwayat statistik tersimpan</h3>
+    <div class="table-wrap"><table style="min-width:700px"><thead><tr><th>Player</th><th>Minggu</th><th>Persentase</th><th>Status</th><th>Keterangan</th><th>Aksi</th></tr></thead><tbody id="admin-history-rows"></tbody></table></div>
+  </div>
+  <div class="admin-subpanel" id="blacklist-admin-panel" style="display:none">
+    <h2>Kelola Player Blacklist</h2><form id="blacklist-admin-form" style="display:grid;gap:10px;max-width:650px">
+      <input id="blacklist-edit-id" type="hidden"><label>User ID</label><input id="blacklist-user-id" required maxlength="200" placeholder="User ID pemain">
+      <label>Alasan</label><textarea id="blacklist-reason" required maxlength="2000" rows="3" placeholder="Alasan masuk blacklist"></textarea>
+      <label for="blacklist-crime-level">Tingkat pelanggaran</label><select id="blacklist-crime-level"><option value="MUSANG">BAHAYA</option><option value="SANGAT BERBAHAYA">SANGAT BERBAHAYA</option><option value="PENJAHAT TINGKAT KAKAP">PENJAHAT KELAS KAKAP</option></select>
+      <div><button type="submit">Simpan blacklist</button> <button type="button" id="blacklist-cancel-edit">Batal edit</button></div><p id="blacklist-admin-message" role="status"></p>
+    </form><div class="table-wrap"><table><thead><tr><th>User ID</th><th>Tingkat</th><th>Aksi</th></tr></thead><tbody id="blacklist-admin-rows"></tbody></table></div>
+  </div>
+  <div class="admin-subpanel" id="community-admin-panel" style="display:none">
+    <h2>Kelola Event / Announcement</h2><form id="community-admin-form" style="display:grid;gap:10px;max-width:650px">
+      <input id="community-edit-id" type="hidden"><label>Kategori</label><select id="community-category"><option value="Event">Event</option><option value="Announcement">Announcement</option></select>
+      <label>Judul</label><input id="community-title-input" required maxlength="200" placeholder="Judul event/pengumuman"><label>Isi</label><textarea id="community-body-input" required maxlength="5000" rows="4" placeholder="Tulis detailnya"></textarea>
+      <label>Tanggal event (opsional)</label><input id="community-date-input" type="date"><label>Status</label><select id="community-status-input"><option value="Active">Active</option><option value="Finished">Finished</option></select>
+      <label><input id="community-pinned-input" type="checkbox" style="width:auto"> Sematkan di atas</label><div><button type="submit">Simpan info</button> <button type="button" id="community-cancel-edit">Batal edit</button></div><p id="community-admin-message" role="status"></p>
+    </form><div class="table-wrap"><table><thead><tr><th>Kategori</th><th>Judul</th><th>Aksi</th></tr></thead><tbody id="community-admin-rows"></tbody></table></div>
+  </div>
+</section>
+  <footer>
+    <span id="admin-secret-trigger" style="cursor:pointer" title="Login admin">
+      © 2026 WORLD ENVY TOP PLAYER · Community Project
+    </span>
+  </footer>
+
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+  <script>
+const SUPABASE_URL = "https://cbcfrnxgcbetueuyhfpe.supabase.co";
+const SUPABASE_KEY = "sb_publishable_hygoytfqzzQbI55iMeUiiA_4aLhnhkL";
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+const search = document.getElementById("search");
+const playerTable = document.getElementById("players");
+const empty = document.getElementById("empty");
+
+let allPlayers = [];
+let openedPlayerId = null;
+
+function historyStatus(value) {
+  if (value >= 80 && value <= 100) return "Baik";
+  if (value >= 40 && value <= 70) return "Sedang";
+  if (value >= 1 && value <= 30) return "Buruk";
+  return "Belum ditentukan";
+}
+
+function renderPlayers() {
+  const query = search.value.trim().toLowerCase();
+  const filtered = allPlayers.filter(p =>
+    String(p.player_name || "").toLowerCase().includes(query)
+  );
+
+  playerTable.replaceChildren();
+
+  filtered.forEach((player, index) => {
+    const row = document.createElement("tr");
+
+    [`#${index + 1}`, player.player_name || "Tanpa nama",
+  Number(player.score || 0).toLocaleString("id-ID"), (player.status || "Aktif")]
+      .forEach((value, col) => {
+        const cell = document.createElement("td");
+
+        
+if (col === 1) {
+  const wrap = document.createElement("div");
+  wrap.className = "player-name-wrap";
+
+  const button = document.createElement("button");
+  button.textContent = value;
+  button.style.cssText =
+    "background:none;border:0;color:#63b4ff;font-weight:bold;font-size:14px;text-align:left;cursor:pointer";
+  button.onclick = () => toggleHistory(player.id);
+  wrap.appendChild(button);
+
+  if (player.player_title && player.player_title.trim()) {
+    const badge = document.createElement("span");
+    badge.className = "player-title";
+
+    if (player.title_rgb === true) {
+      badge.classList.add("rgb-active");
+    }
+
+    const leftWing = document.createElement("span");
+    leftWing.className = "wing";
+    leftWing.textContent = "❧";
+
+    const titleText = document.createElement("span");
+    titleText.className = "title-text";
+    titleText.textContent = player.player_title;
+
+    const rightWing = document.createElement("span");
+    rightWing.className = "wing";
+    rightWing.textContent = "❧";
+
+    badge.append(leftWing, titleText, rightWing);
+    wrap.appendChild(badge);
+  }
+
+  cell.appendChild(wrap);
+} else {
+  cell.textContent = value;
+}
+
+        if (col === 0) cell.className = "rank";
+        if (col === 3) { cell.className = String(value).toLowerCase().includes("tidak") ? "status status-inactive" : "status status-active"; }
+        row.appendChild(cell);
+      });
+
+    playerTable.appendChild(row);
+
+    if (String(openedPlayerId) === String(player.id)) {
+      const detailRow = document.createElement("tr");
+      const detailCell = document.createElement("td");
+      detailCell.colSpan = 4;
+      detailCell.style.cssText = "background:#0d1626;padding:20px";
+
+      const panel = document.createElement("div");
+      panel.textContent = "Memuat statistik...";
+      panel.id = "history-panel-" + player.id;
+      detailCell.appendChild(panel);
+      detailRow.appendChild(detailCell);
+      playerTable.appendChild(detailRow);
+    }
+  });
+
+  empty.style.display = filtered.length ? "none" : "block";
+  empty.textContent = query
+    ? "Pemain tidak ditemukan."
+    : "Belum ada data pemain.";
+}
+
+async function toggleHistory(playerId) {
+  if (String(openedPlayerId) === String(playerId)) {
+    openedPlayerId = null;
+    renderPlayers();
+    return;
+  }
+
+  openedPlayerId = playerId;
+  renderPlayers();
+
+  const panel = document.getElementById("history-panel-" + playerId);
+  if (!panel) return;
+
+  try {
+    const { data, error } = await db
+      .from("player_history_weekly")
+      .select("week_start, history_percentage, description")
+      .eq("player_id", playerId)
+      .order("week_start", { ascending: false });
+
+    if (error) {
+  console.error("Error riwayat Supabase:", error);
+  panel.textContent = "Gagal memuat: " + error.message;
+  return;
+    }
+
+    // Awal minggu dihitung Senin, mengikuti tanggal lokal perangkat.
+    const today = new Date();
+    const currentWeekDate = new Date(today);
+    const day = (currentWeekDate.getDay() + 6) % 7;
+    currentWeekDate.setDate(currentWeekDate.getDate() - day);
+    const currentWeekStart = `${currentWeekDate.getFullYear()}-${String(currentWeekDate.getMonth()+1).padStart(2,'0')}-${String(currentWeekDate.getDate()).padStart(2,'0')}`;
+    const sortedData = (data || []).slice().sort((a,b) => String(b.week_start).localeCompare(String(a.week_start)));
+    const currentWeekRecord = sortedData.find(item => item.week_start === currentWeekStart) || null;
+    const latest = sortedData[0] || null;
+    // Jika minggu ini belum ada catatan, pertahankan statistik terakhir sebagai ringkasan.
+    const displayedRecord = currentWeekRecord || latest;
+    const percentage = displayedRecord ? Number(displayedRecord.history_percentage) : 0;
+    const status = displayedRecord ? historyStatus(percentage) : "Belum ada riwayat";
+
+    panel.replaceChildren();
+
+    const title = document.createElement("h3");
+    title.textContent = "Riwayat Pemain";
+    title.style.color = "#63b4ff";
+    panel.appendChild(title);
+
+    // Tampilkan ringkasan hanya jika ada catatan minggu ini. Jika riwayat lama ada,
+    // jangan tampilkan pesan "belum ada catatan minggu ini" atau ringkasan statistik terakhir.
+    // Jika sama sekali belum ada statistik, tampilkan pesan yang diminta.
+    if (sortedData.length === 0) {
+      const noStats = document.createElement("p");
+      noStats.style.cssText = "margin-top:12px;line-height:1.8";
+      noStats.textContent = "Player Ini Belum Memiliki Statistik";
+      panel.appendChild(noStats);
+    } else if (currentWeekRecord) {
+      const percent = document.createElement("p");
+      percent.style.cssText = "margin-top:12px;line-height:1.8";
+      percent.textContent = `Minggu ini (${currentWeekStart}): ${percentage}% — Status: ${status}`;
+      panel.appendChild(percent);
+    }
+
+    // Diagram selalu memakai seluruh catatan yang tersedia, bukan hanya minggu berjalan.
+    if (sortedData.length) {
+      const chartHeading = document.createElement("h4");
+      chartHeading.textContent = "Diagram Riwayat Mingguan";
+      chartHeading.style.cssText = "margin-top:18px;color:#63b4ff";
+      panel.appendChild(chartHeading);
+
+      const chartBox = document.createElement("div");
+      chartBox.style.cssText = "position:relative;width:100%;height:260px;margin-top:12px;max-width:100%";
+      const canvas = document.createElement("canvas");
+      canvas.id = "history-chart-" + playerId;
+      chartBox.appendChild(canvas);
+      panel.appendChild(chartBox);
+
+      const chartData = sortedData.slice().reverse();
+      new Chart(canvas.getContext("2d"), {
+        type: "line",
+        data: {
+          labels: chartData.map(item => {
+            const date = new Date(item.week_start + "T00:00:00");
+            return date.toLocaleDateString("id-ID", { day: "2-digit", month: "short", year: "2-digit" });
+          }),
+          datasets: [{
+            label: "Persentase Riwayat",
+            data: chartData.map(item => Number(item.history_percentage)),
+            borderColor: "#35d399",
+            backgroundColor: "#35d39933",
+            pointBackgroundColor: chartData.map(item => {
+              const valueStatus = historyStatus(Number(item.history_percentage));
+              return valueStatus === "Baik" ? "#35d399" :
+                     valueStatus === "Sedang" ? "#fbbf24" :
+                     valueStatus === "Buruk" ? "#fb7185" : "#71819c";
+            }),
+            pointRadius: 5,
+            borderWidth: 3,
+            tension: 0.3,
+            fill: true
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: false,
+          scales: {
+            y: {
+              min: 0,
+              max: 100,
+              ticks: { stepSize: 20, color: "#aab6cb", callback: value => value + "%" },
+              grid: { color: "#26354d" },
+              title: { display: true, text: "Persentase", color: "#aab6cb" }
+            },
+            x: {
+              ticks: { color: "#aab6cb", maxRotation: 0, autoSkip: true },
+              grid: { color: "#26354d" }
+            }
+          },
+          plugins: {
+            legend: { labels: { color: "#dce6f7" } }
+          }
+        }
+      });
+    } else {
+      const noChart = document.createElement("p");
+      noChart.style.cssText = "margin-top:14px;color:#aab6cb";
+      noChart.textContent = "Player Ini Belum Memiliki Statistik";
+      panel.appendChild(noChart);
+    }
+
+    // Bar statistik tidak menghilang saat berganti minggu:
+    // tampilkan data minggu ini, atau data terakhir jika minggu ini belum dicatat.
+    if (displayedRecord) {
+      const barSection = document.createElement("section");
+      barSection.style.cssText = "margin-top:18px;padding:14px;background:#101a2b;border-radius:10px";
+      const barTitle = document.createElement("h4");
+      barTitle.style.cssText = "margin:0 0 10px;color:#C4A0FF";
+      barTitle.textContent = currentWeekRecord ? "Statistik Minggu Ini" : "Statistik Terakhir";
+      const barLabel = document.createElement("p");
+      barLabel.style.cssText = "margin:0 0 9px;color:#dce6f7";
+      barLabel.textContent = `${displayedRecord.week_start} — ${percentage}% (${status})`;
+      const track = document.createElement("div");
+      track.style.cssText = "width:100%;height:12px;background:#26354d;border-radius:999px;overflow:hidden";
+      const fill = document.createElement("div");
+      const barColor = status === "Baik" ? "#35d399" : status === "Sedang" ? "#fbbf24" : status === "Buruk" ? "#fb7185" : "#71819c";
+      fill.style.cssText = `width:${Math.max(0, Math.min(100, percentage))}%;height:100%;background:${barColor};border-radius:999px;`;
+      track.appendChild(fill);
+      barSection.append(barTitle, barLabel, track);
+      if (displayedRecord.description) {
+        const desc = document.createElement("p");
+        desc.style.cssText = "color:#aab6cb;line-height:1.7;margin:10px 0 0;white-space:pre-wrap";
+        desc.textContent = "Keterangan: " + displayedRecord.description;
+        barSection.appendChild(desc);
+      }
+      panel.appendChild(barSection);
+    }
+
+    const previousRecords = sortedData.filter(item => !currentWeekRecord || item.week_start !== currentWeekStart);
+    if (previousRecords.length) {
+      const heading = document.createElement("h4");
+      heading.textContent = "Riwayat Minggu Sebelumnya";
+      heading.style.cssText = "margin-top:22px;color:#C4A0FF";
+      panel.appendChild(heading);
+
+      previousRecords.forEach(item => {
+        const value = Math.max(0, Math.min(100, Number(item.history_percentage) || 0));
+        const statusValue = historyStatus(value);
+        const details = document.createElement("details");
+        details.style.cssText = "margin-top:10px;padding:12px 14px;background:#17151c;border:1px solid #3b3038;border-radius:10px";
+        const summary = document.createElement("summary");
+        summary.style.cssText = "cursor:pointer;color:#e8dce0;line-height:1.6;font-size:13px";
+        summary.textContent = `${item.week_start} · ${value}% · ${statusValue}  ﹀`;
+        details.appendChild(summary);
+
+        const desc = document.createElement("p");
+        desc.style.cssText = "color:#b7a9ae;font-size:13px;line-height:1.7;margin-top:10px;white-space:pre-wrap";
+        desc.textContent = item.description || "Player Ini Belum Memiliki Statistik";
+        details.appendChild(desc);
+
+        const oldTrack = document.createElement("div");
+        oldTrack.style.cssText = "width:100%;height:9px;background:#26354d;border-radius:999px;overflow:hidden;margin-top:10px";
+        const oldFill = document.createElement("div");
+        const oldColor = statusValue === "Baik" ? "#35d399" : statusValue === "Sedang" ? "#fbbf24" : statusValue === "Buruk" ? "#fb7185" : "#71819c";
+        oldFill.style.cssText = `width:${value}%;height:100%;background:${oldColor};border-radius:999px`;
+        oldTrack.appendChild(oldFill);
+        details.appendChild(oldTrack);
+        panel.appendChild(details);
+      });
+    }
+  } catch (error) {
+    console.error("Gagal memuat riwayat:", error);
+    panel.textContent =
+      "Riwayat gagal dimuat. Periksa tabel player_history_weekly dan kebijakan akses Supabase.";
+  }
+}
+
+search.addEventListener("input", () => {
+  openedPlayerId = null;
+  renderPlayers();
+});
+
+async function loadPlayers() {
+  empty.style.display = "block";
+  empty.textContent = "Memuat data pemain...";
+
+const { data, error } = await db
+  .from("players")
+  .select("id, player_name, score, status, player_title, title_rgb")
+  .order("score", { ascending: false });
+  
+  if (error) {
+    console.error(error);
+    empty.textContent = "Data pemain gagal dimuat. Periksa koneksi Supabase.";
+    return;
+  }
+
+  allPlayers = data || [];
+  renderPlayers();
+}
+
+const secretTrigger = document.getElementById("admin-secret-trigger");
+const adminLoginSection = document.getElementById("admin-login");
+const adminLoginForm = document.getElementById("admin-login-form");
+const adminEmail = document.getElementById("admin-email");
+const adminPassword = document.getElementById("admin-password");
+const adminMessage = document.getElementById("admin-login-message");
+const adminLogout = document.getElementById("admin-logout");
+
+let verifiedAdmin = false;
+
+adminLoginForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  verifiedAdmin = false;
+  adminLogout.style.display = "none";
+  adminMessage.textContent = "Memeriksa akun...";
+
+  const { data, error } = await db.auth.signInWithPassword({
+    email: adminEmail.value.trim(),
+    password: adminPassword.value
+  });
+
+  if (error) {
+    adminMessage.textContent = "Login gagal: " + error.message;
+    return;
+  }
+
+  const { data: admin, error: adminError } = await db
+    .from("admins")
+    .select("user_id")
+    .eq("user_id", data.user.id)
+    .maybeSingle();
+
+  if (adminError || !admin) {
+    await db.auth.signOut();
+    adminMessage.textContent =
+      "Akun berhasil login, tetapi tidak terdaftar sebagai admin.";
+    return;
+  }
+
+  verifiedAdmin = true;
+  adminPassword.value = "";
+  adminLogout.style.display = "inline-block";
+  adminMessage.textContent = "Login admin berhasil. Panel pengelolaan sudah terbuka.";
+  adminLoginSection.style.display = "none";
+  document.getElementById("admin-panel").style.display = "block";
+  document.getElementById("admin-panel").scrollIntoView({ behavior: "smooth", block: "start" });
+  await loadAdminPlayers();
+  populateHistoryPlayerOptions();
+  await loadAdminHistory();
+  loadBanner();
+  loadBlacklistAdmin();
+  loadCommunityAdmin();
+  const activeView = document.querySelector('.page-view.active')?.id;
+  const bp = document.getElementById('blacklist-admin-panel'); if (bp) bp.style.display = activeView === 'blacklist-view' ? 'block' : 'none';
+  const cp = document.getElementById('community-admin-panel'); if (cp) cp.style.display = activeView === 'community-view' ? 'block' : 'none';
+  document.getElementById('banner-admin-tools').style.display = 'flex';
+});
+
+adminLogout.addEventListener("click", async () => {
+  const { error } = await db.auth.signOut();
+  verifiedAdmin = false;
+  adminLogout.style.display = "none";
+  document.getElementById("admin-panel").style.display = "none";
+  adminLoginSection.style.display = "block";
+  adminMessage.textContent = error
+    ? "Logout gagal: " + error.message
+    : "Kamu sudah logout.";
+});
+
+const adminPlayerForm = document.getElementById("player-admin-form");
+const adminPlayerRows = document.getElementById("admin-players");
+const adminPlayerMessage = document.getElementById("player-admin-message");
+const adminPlayerId = document.getElementById("edit-player-id");
+const adminPlayerName = document.getElementById("player-admin-name");
+const adminPlayerScore = document.getElementById("player-admin-score");
+const adminPlayerStatus = document.getElementById("player-admin-status");
+const adminPlayerTitle = document.getElementById("player-admin-title");
+const adminPlayerRgb = document.getElementById("player-admin-rgb");
+const adminPlayerSave = document.getElementById("player-admin-save");
+const adminPlayerCancel = document.getElementById("player-admin-cancel");
+
+function resetPlayerAdminForm() {
+  adminPlayerForm.reset();
+  adminPlayerId.value = "";
+  adminPlayerScore.value = "0";
+  adminPlayerSave.textContent = "Tambah pemain";
+  adminPlayerCancel.style.display = "none";
+}
+
+async function loadAdminPlayers() {
+  if (!verifiedAdmin) return;
+  adminPlayerRows.replaceChildren();
+  adminPlayerMessage.textContent = "Memuat data pemain...";
+  const { data, error } = await db
+    .from("players")
+    .select("id, player_name, score, status, player_title, title_rgb")
+    .order("score", { ascending: false });
+  if (error) {
+    console.error("Gagal memuat panel admin:", error);
+    adminPlayerMessage.textContent = "Gagal memuat data. Periksa kebijakan SELECT pada tabel players.";
+    return;
+  }
+  allPlayers = data || [];
+  renderPlayers();
+  if (typeof populateHistoryPlayerOptions === "function") populateHistoryPlayerOptions();
+  for (const player of allPlayers) {
+    const row = document.createElement("tr");
+    const nameCell = document.createElement("td");
+    nameCell.textContent = player.player_name || "Tanpa nama";
+    const scoreCell = document.createElement("td");
+    scoreCell.textContent = Number(player.score || 0).toLocaleString("id-ID");
+    const statusCell = document.createElement("td");
+    statusCell.textContent = player.status || "Aktif";
+    statusCell.className = (player.status || "Aktif") === "Aktif" ? "status-active" : "status-inactive";
+    const actionCell = document.createElement("td");
+    actionCell.style.whiteSpace = "nowrap";
+    const editButton = document.createElement("button");
+    editButton.type = "button";
+    editButton.textContent = "Edit";
+    editButton.style.cssText = "margin-right:8px;padding:7px 10px;background:#2787ff;color:white;border:0;border-radius:6px;cursor:pointer";
+    editButton.addEventListener("click", () => {
+      adminPlayerId.value = player.id;
+      adminPlayerName.value = player.player_name || "";
+      adminPlayerScore.value = Number(player.score || 0);
+      adminPlayerStatus.value = player.status || "Aktif";
+      adminPlayerTitle.value = player.player_title || "";
+      adminPlayerRgb.checked = player.title_rgb === true;
+      adminPlayerSave.textContent = "Simpan perubahan";
+      adminPlayerCancel.style.display = "inline-block";
+      adminPlayerMessage.textContent = "Mode edit: " + (player.player_name || "pemain");
+      adminPlayerForm.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+    const deleteButton = document.createElement("button");
+    deleteButton.type = "button";
+    deleteButton.textContent = "Hapus";
+    deleteButton.style.cssText = "padding:7px 10px;background:#a83246;color:white;border:0;border-radius:6px;cursor:pointer";
+    deleteButton.addEventListener("click", async () => {
+      if (!verifiedAdmin) {
+        adminPlayerMessage.textContent = "Login sebagai admin terlebih dahulu.";
+        return;
+      }
+      if (!confirm(`Hapus pemain "${player.player_name}"? Tindakan ini tidak dapat dibatalkan.`)) return;
+      deleteButton.disabled = true;
+      adminPlayerMessage.textContent = "Menghapus pemain...";
+      try {
+        const { data: deletedPlayer, error: deleteError } = await db
+          .from("players")
+          .delete()
+          .eq("id", player.id)
+          .select("id")
+          .maybeSingle();
+        if (deleteError) throw deleteError;
+        if (!deletedPlayer) {
+          adminPlayerMessage.textContent = "Pemain tidak terhapus. Data mungkin sudah berubah atau akses DELETE RLS ditolak.";
+          return;
+        }
+        adminPlayerMessage.textContent = "Pemain berhasil dihapus.";
+        if (String(adminPlayerId.value) === String(player.id)) resetPlayerAdminForm();
+        await loadAdminPlayers();
+      } catch (error) {
+        console.error("Gagal menghapus pemain:", error);
+        adminPlayerMessage.textContent = "Gagal menghapus pemain. Periksa koneksi dan kebijakan DELETE RLS admin.";
+      } finally {
+        deleteButton.disabled = false;
+      }
+    });
+    actionCell.append(editButton, deleteButton);
+    row.append(nameCell, scoreCell, statusCell, actionCell);
+    adminPlayerRows.appendChild(row);
+  }
+  adminPlayerMessage.textContent = `Data dimuat: ${allPlayers.length} pemain.`;
+}
+
+adminPlayerForm.addEventListener("submit", async (event) => {
+  event.preventDefault();
+  if (!verifiedAdmin) {
+    adminPlayerMessage.textContent = "Login sebagai admin terlebih dahulu.";
+    return;
+  }
+  const playerName = adminPlayerName.value.trim();
+  const score = Number(adminPlayerScore.value);
+  if (!playerName) {
+    adminPlayerMessage.textContent = "Nama pemain wajib diisi.";
+    return;
+  }
+  if (!Number.isSafeInteger(score) || score < 0) {
+    adminPlayerMessage.textContent = "Skor harus berupa bilangan bulat nol atau lebih.";
+    return;
+  }
+  const payload = {
+    player_name: playerName,
+    score,
+    status: adminPlayerStatus.value,
+    player_title: adminPlayerTitle.value.trim() || null,
+    title_rgb: adminPlayerRgb.checked
+  };
+  adminPlayerSave.disabled = true;
+  adminPlayerMessage.textContent = "Menyimpan data...";
+  const isEdit = Boolean(adminPlayerId.value);
+  try {
+    let result;
+    if (isEdit) {
+      result = await db.from("players")
+        .update(payload)
+        .eq("id", adminPlayerId.value)
+        .select("id")
+        .maybeSingle();
+    } else {
+      result = await db.from("players")
+        .insert(payload)
+        .select("id")
+        .single();
+    }
+    if (result.error) throw result.error;
+    if (!result.data) {
+      adminPlayerMessage.textContent = "Tidak ada perubahan tersimpan. Periksa ID pemain dan kebijakan UPDATE RLS admin.";
+      return;
+    }
+    adminPlayerMessage.textContent = isEdit ? "Perubahan pemain berhasil disimpan." : "Pemain berhasil ditambahkan.";
+    resetPlayerAdminForm();
+    await loadAdminPlayers();
+  } catch (error) {
+    console.error("Gagal menyimpan pemain:", error);
+    adminPlayerMessage.textContent = "Gagal menyimpan. Periksa koneksi, kolom tabel players, dan kebijakan INSERT/UPDATE RLS admin.";
+  } finally {
+    adminPlayerSave.disabled = false;
+  }
+});
+
+adminPlayerCancel.addEventListener("click", resetPlayerAdminForm);
+
+// Admin CRUD untuk statistik riwayat mingguan dan keterangan setiap player.
+const historyAdminForm = document.getElementById("history-admin-form");
+const historyAdminId = document.getElementById("history-admin-id");
+const historyAdminPlayer = document.getElementById("history-admin-player");
+const historyAdminWeek = document.getElementById("history-admin-week");
+const historyAdminPercent = document.getElementById("history-admin-percent");
+const historyAdminDescription = document.getElementById("history-admin-description");
+const historyAdminStatusPreview = document.getElementById("history-admin-status-preview");
+const historyAdminSave = document.getElementById("history-admin-save");
+const historyAdminCancel = document.getElementById("history-admin-cancel");
+const historyAdminRefresh = document.getElementById("history-admin-refresh");
+const historyAdminMessage = document.getElementById("history-admin-message");
+const historyAdminRows = document.getElementById("admin-history-rows");
+let adminHistoryRecords = [];
+
+function updateHistoryStatusPreview() {
+  const raw = historyAdminPercent.value;
+  if (raw === "") {
+    historyAdminStatusPreview.textContent = "Status: —";
+    historyAdminStatusPreview.style.color = "#9eacc5";
+    return;
+  }
+  const status = historyStatus(Number(raw));
+  const color = status === "Baik" ? "#35d399" : status === "Sedang" ? "#fbbf24" : "#fb7185";
+  historyAdminStatusPreview.textContent = `Status otomatis: ${status}`;
+  historyAdminStatusPreview.style.color = color;
+}
+historyAdminPercent.addEventListener("input", updateHistoryStatusPreview);
+
+function resetHistoryAdminForm() {
+  historyAdminForm.reset();
+  historyAdminId.value = "";
+  historyAdminSave.textContent = "Tambah statistik";
+  historyAdminCancel.style.display = "none";
+  updateHistoryStatusPreview();
+}
+
+function populateHistoryPlayerOptions() {
+  const current = historyAdminPlayer.value;
+  historyAdminPlayer.replaceChildren();
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Pilih player...";
+  historyAdminPlayer.appendChild(placeholder);
+  allPlayers.forEach(player => {
+    const option = document.createElement("option");
+    option.value = String(player.id);
+    option.textContent = player.player_name || `Player ${player.id}`;
+    historyAdminPlayer.appendChild(option);
+  });
+  if (current && allPlayers.some(player => String(player.id) === current)) historyAdminPlayer.value = current;
+}
+
+async function loadAdminHistory() {
+  if (!verifiedAdmin) return;
+  historyAdminMessage.textContent = "Memuat statistik...";
+  historyAdminRows.replaceChildren();
+  const { data, error } = await db
+    .from("player_history_weekly")
+    .select("id, player_id, week_start, history_percentage, description")
+    .order("week_start", { ascending: false });
+  if (error) {
+    console.error("Gagal memuat statistik admin:", error);
+    historyAdminMessage.textContent = "Gagal memuat statistik: " + error.message + ". Periksa izin SELECT pada player_history_weekly.";
+    return;
+  }
+  adminHistoryRecords = data || [];
+  const names = new Map(allPlayers.map(player => [String(player.id), player.player_name || `Player ${player.id}`]));
+  adminHistoryRecords.forEach(record => {
+    const row = document.createElement("tr");
+    const name = document.createElement("td"); name.textContent = names.get(String(record.player_id)) || `Player ${record.player_id}`;
+    const week = document.createElement("td"); week.textContent = record.week_start || "—";
+    const percentage = Number(record.history_percentage);
+    const pct = document.createElement("td"); pct.textContent = `${percentage}%`;
+    const status = document.createElement("td"); status.textContent = historyStatus(percentage);
+    const desc = document.createElement("td"); desc.textContent = record.description || "—"; desc.style.whiteSpace = "pre-wrap"; desc.style.maxWidth = "260px";
+    const actions = document.createElement("td"); actions.style.whiteSpace = "nowrap";
+    const edit = document.createElement("button"); edit.type = "button"; edit.textContent = "Edit";
+    edit.style.cssText = "margin-right:7px;padding:7px 10px;background:#2787ff;color:white;border:0;border-radius:6px;cursor:pointer";
+    edit.addEventListener("click", () => {
+      historyAdminId.value = record.id;
+      historyAdminPlayer.value = String(record.player_id);
+      historyAdminWeek.value = record.week_start || "";
+      historyAdminPercent.value = percentage;
+      historyAdminDescription.value = record.description || "";
+      historyAdminSave.textContent = "Simpan perubahan";
+      historyAdminCancel.style.display = "inline-block";
+      updateHistoryStatusPreview();
+      historyAdminMessage.textContent = "Mode edit statistik: " + (names.get(String(record.player_id)) || "player");
+      historyAdminForm.scrollIntoView({behavior:"smooth",block:"start"});
+    });
+    const remove = document.createElement("button"); remove.type = "button"; remove.textContent = "Hapus";
+    remove.style.cssText = "padding:7px 10px;background:#a83246;color:white;border:0;border-radius:6px;cursor:pointer";
+    remove.addEventListener("click", async () => {
+      if (!verifiedAdmin) return;
+      if (!confirm(`Hapus statistik minggu ${record.week_start} untuk ${names.get(String(record.player_id)) || "player ini"}?`)) return;
+      remove.disabled = true;
+      const { error: deleteError } = await db.from("player_history_weekly").delete().eq("id", record.id);
+      if (deleteError) {
+        console.error(deleteError);
+        historyAdminMessage.textContent = "Gagal menghapus statistik: " + deleteError.message;
+        remove.disabled = false;
+        return;
+      }
+      historyAdminMessage.textContent = "Statistik berhasil dihapus.";
+      if (historyAdminId.value === String(record.id)) resetHistoryAdminForm();
+      await loadAdminHistory();
+      if (String(openedPlayerId) === String(record.player_id)) await toggleHistory(record.player_id);
+    });
+    actions.append(edit, remove);
+    row.append(name, week, pct, status, desc, actions);
+    historyAdminRows.appendChild(row);
+  });
+  historyAdminMessage.textContent = adminHistoryRecords.length
+    ? `Data dimuat: ${adminHistoryRecords.length} catatan statistik.`
+    : "Belum ada catatan statistik. Pilih player dan tambah catatan pertama melalui formulir di atas.";
+}
+
+historyAdminForm.addEventListener("submit", async event => {
+  event.preventDefault();
+  if (!verifiedAdmin) { historyAdminMessage.textContent = "Login sebagai admin terlebih dahulu."; return; }
+  const playerId = historyAdminPlayer.value;
+  const weekStart = historyAdminWeek.value;
+  const percentage = Number(historyAdminPercent.value);
+  if (!playerId || !weekStart) { historyAdminMessage.textContent = "Pilih player dan tanggal minggu terlebih dahulu."; return; }
+  if (!Number.isInteger(percentage) || percentage < 0 || percentage > 100) { historyAdminMessage.textContent = "Persentase harus berupa bilangan bulat 0 sampai 100."; return; }
+  const payload = { player_id: playerId, week_start: weekStart, history_percentage: percentage, description: historyAdminDescription.value.trim() || null };
+  historyAdminSave.disabled = true;
+  historyAdminMessage.textContent = "Menyimpan statistik...";
+  let result;
+  if (historyAdminId.value) {
+    result = await db.from("player_history_weekly").update(payload).eq("id", historyAdminId.value);
+  } else {
+    result = await db.from("player_history_weekly").insert(payload);
+  }
+  historyAdminSave.disabled = false;
+  if (result.error) {
+    console.error("Gagal menyimpan statistik:", result.error);
+    historyAdminMessage.textContent = "Gagal menyimpan statistik: " + result.error.message + ". Pastikan tabel memiliki kolom id, player_id, week_start, history_percentage, description dan kebijakan INSERT/UPDATE RLS admin.";
+    return;
+  }
+  historyAdminMessage.textContent = historyAdminId.value ? "Perubahan statistik berhasil disimpan." : "Statistik baru berhasil ditambahkan.";
+  resetHistoryAdminForm();
+  await loadAdminHistory();
+  if (String(openedPlayerId) === String(playerId)) {
+    openedPlayerId = null;
+    renderPlayers();
+    await toggleHistory(playerId);
+  }
+});
+
+historyAdminCancel.addEventListener("click", resetHistoryAdminForm);
+historyAdminRefresh.addEventListener("click", async () => { await loadAdminPlayers(); await loadAdminHistory(); });
+
+if (secretTrigger && adminLoginSection) {
+  secretTrigger.style.cursor = "pointer";
+  secretTrigger.title = "Buka Login Admin";
+  secretTrigger.setAttribute("role", "button");
+  secretTrigger.setAttribute("tabindex", "0");
+  secretTrigger.setAttribute("aria-label", "Buka Login Admin");
+
+  const toggleAdminLogin = () => {
+    const isHidden = getComputedStyle(adminLoginSection).display === "none";
+    adminLoginSection.style.display = isHidden ? "block" : "none";
+    if (isHidden) adminLoginSection.scrollIntoView({ behavior: "smooth", block: "start" });
+  };
+  secretTrigger.addEventListener("click", toggleAdminLogin);
+  secretTrigger.addEventListener("keydown", event => {
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      toggleAdminLogin();
+    }
+  });
+}
+
+// Demi keamanan, jangan otomatis membuka panel dari sesi lama saat halaman dimuat.
+// Setiap kunjungan harus membuka login lewat footer dan login ulang secara eksplisit.
+async function restoreAdminSession() {
+  // Keamanan: setiap pemuatan halaman harus memulai dari keadaan logout.
+  // Sesi Supabase yang tersimpan dari kunjungan sebelumnya tidak boleh membuka panel admin otomatis.
+  verifiedAdmin = false;
+  adminLogout.style.display = "none";
+  adminLoginSection.style.display = "none";
+  document.getElementById("admin-panel").style.display = "none";
+  const bannerTools = document.getElementById("banner-admin-tools");
+  if (bannerTools) bannerTools.style.display = "none";
+
+  const { error } = await db.auth.signOut();
+  if (error) {
+    console.warn("Sesi sebelumnya tidak dapat dibersihkan sepenuhnya:", error.message);
+  }
+  adminPassword.value = "";
+  adminMessage.textContent = "Tekan footer © 2026 WORLD ENVY TOP PLAYER · Community Project untuk membuka login admin.";
+}
+
+
+// Sidebar hamburger: buka/tutup dan tutup setelah memilih menu.
+const sidebar = document.getElementById('site-sidebar');
+const sidebarToggle = document.getElementById('sidebar-toggle');
+const sidebarBackdrop = document.getElementById('sidebar-backdrop');
+function setSidebar(open) {
+  sidebar.classList.toggle('open', open);
+  sidebarBackdrop.classList.toggle('open', open);
+  sidebarToggle.setAttribute('aria-expanded', String(open));
+  sidebarToggle.setAttribute('aria-label', open ? 'Tutup menu' : 'Buka menu');
+  sidebarToggle.textContent = open ? '×' : '☰';
+}
+sidebarToggle.addEventListener('click', () => setSidebar(!sidebar.classList.contains('open')));
+sidebarBackdrop.addEventListener('click', () => setSidebar(false));
+
+// Navigasi satu halaman: tiap menu menampilkan bagian yang dipilih.
+const viewLinks = document.querySelectorAll('#site-sidebar [data-view]');
+const pageViews = document.querySelectorAll('.page-view');
+function showView(viewId, scrollTarget) {
+  pageViews.forEach(view => view.classList.toggle('active', view.id === viewId));
+  document.querySelectorAll('#site-sidebar [data-view]').forEach(link => {
+    link.classList.toggle('active', link.dataset.view === viewId && !link.dataset.scroll);
+  });
+  if (scrollTarget) {
+    const target = document.getElementById(scrollTarget);
+    if (target) setTimeout(() => target.scrollIntoView({ behavior:'smooth', block:'start' }), 40);
+  } else {
+    window.scrollTo({ top:0, behavior:'smooth' });
+  }
+  const headerCopyright = document.getElementById('header-copyright');
+  const footerCopyright = document.getElementById('admin-secret-trigger');
+  const communityPage = viewId === 'blacklist-view' || viewId === 'community-view' || viewId === 'event-hub-view';
+  if (headerCopyright) headerCopyright.style.display = communityPage ? 'block' : 'none';
+  if (footerCopyright) footerCopyright.style.display = communityPage ? 'none' : 'inline';
+  if (viewId === 'blacklist-view') loadBlacklist();
+  if (viewId === 'community-view') loadCommunityItems();
+  const bp = document.getElementById('blacklist-admin-panel'); if (bp) bp.style.display = verifiedAdmin && viewId === 'blacklist-view' ? 'block' : 'none';
+  const cp = document.getElementById('community-admin-panel'); if (cp) cp.style.display = verifiedAdmin && viewId === 'community-view' ? 'block' : 'none';
+}
+viewLinks.forEach(link => link.addEventListener('click', event => {
+  event.preventDefault();
+  showView(link.dataset.view, link.dataset.scroll || null);
+  setSidebar(false);
+  history.replaceState(null, '', link.getAttribute('href'));
+}));
+
+function makeEmptyState(message) {
+  const div = document.createElement('div');
+  div.className = 'empty-state';
+  div.textContent = message;
+  return div;
+}
+function safeText(value, fallback='') {
+  if (value === null || value === undefined) return fallback;
+  if (typeof value === 'object') return JSON.stringify(value);
+  return String(value);
+}
+async function loadBlacklist() {
+  const container = document.getElementById('blacklist-content');
+  container.replaceChildren(makeEmptyState('Memuat data blacklist...'));
+  const { data, error } = await db.from('player_blacklist').select('*');
+  container.replaceChildren();
+  if (error) {
+    console.error('Gagal memuat blacklist:', error);
+    container.appendChild(makeEmptyState('Data blacklist belum bisa dimuat. Periksa kebijakan akses baca (RLS) tabel player_blacklist.'));
+    return;
+  }
+  if (!data || data.length === 0) {
+    container.appendChild(makeEmptyState('Belum ada data Player Blacklist.'));
+    return;
+  }
+  data.forEach((item, index) => {
+    const card = document.createElement('article');
+    card.className = 'data-card';
+    const title = document.createElement('h3');
+    title.textContent = safeText(item.user_id ?? item.player_id ?? item.username, `Data blacklist ${index + 1}`);
+    const reason = document.createElement('p');
+    reason.className = 'data-body';
+    reason.textContent = safeText(item.reason ?? item.description ?? item.note, 'Alasan belum dicantumkan.');
+    const meta = document.createElement('p');
+    meta.className = 'data-meta';
+    meta.textContent = 'PLAYER BLACKLIST';
+    const rawLevel = item.crime_level || 'MUSANG';
+    const displayLevel = ({'MUSANG':'BAHAYA','PENJAHAT TINGKAT KAKAP':'PENJAHAT KELAS KAKAP'})[rawLevel] || rawLevel;
+    const level = document.createElement('p');
+    level.className = 'data-date';
+    level.textContent = 'Tingkat pelanggaran: ' + displayLevel;
+    card.append(meta, title, level, reason);
+    container.appendChild(card);
+  });
+}
+function firstField(item, candidates) {
+  for (const key of candidates) if (item[key] !== null && item[key] !== undefined && String(item[key]).trim() !== '') return item[key];
+  return null;
+}
+function formatCommunityDate(value) {
+  if (value === null || value === undefined || value === '') return null;
+  // For ISO timestamps, use only the stored calendar date to avoid timezone shifts.
+  const raw = String(value).trim();
+  const match = raw.match(/^(\d{4})-(\d{2})-(\d{2})/);
+  if (!match) return raw;
+  const year = Number(match[1]), month = Number(match[2]), day = Number(match[3]);
+  const date = new Date(Date.UTC(year, month - 1, day));
+  return new Intl.DateTimeFormat('id-ID', {day:'numeric', month:'long', year:'numeric', timeZone:'UTC'}).format(date);
+}
+async function loadCommunityItems() {
+  const container = document.getElementById('community-content');
+  container.replaceChildren(makeEmptyState('Memuat event dan pengumuman...'));
+  const { data, error } = await db.from('announcements').select('*');
+  container.replaceChildren();
+  if (error) {
+    console.error('Gagal memuat event/pengumuman:', error);
+    container.appendChild(makeEmptyState('Event dan pengumuman belum bisa dimuat. Periksa kebijakan akses baca (RLS) tabel announcements.'));
+    return;
+  }
+  if (!data || data.length === 0) {
+    container.appendChild(makeEmptyState('Belum ada event atau pengumuman yang dipublikasikan.'));
+    return;
+  }
+  const sorted = data.slice().sort((a,b) => Number(!!b.is_pinned)-Number(!!a.is_pinned) || String(a.event_date||'').localeCompare(String(b.event_date||'')));
+  sorted.forEach((item, index) => {
+    const card = document.createElement('article');
+    card.className = 'data-card';
+    const category = firstField(item, ['type','category','kind','content_type']) || 'INFO KOMUNITAS';
+    const titleText = firstField(item, ['title','name','event_name','announcement_title','subject']) || `Info komunitas ${index + 1}`;
+    const bodyText = firstField(item, ['content','message','description','details','body','announcement']);
+    const dateText = firstField(item, ['event_date','date','published_at','created_at','start_date']);
+    const meta = document.createElement('p');
+    meta.className = 'data-meta';
+    const statusText = item.event_status ? (item.event_status === 'Finished' ? 'SELESAI' : 'AKTIF') : null;
+    meta.textContent = [category, item.is_pinned ? 'DISEMATKAN' : null, statusText].filter(Boolean).join(' · ');
+    const title = document.createElement('h3');
+    title.textContent = safeText(titleText);
+    card.append(meta, title);
+    if (dateText) {
+      const date = document.createElement('p');
+      date.className = 'data-date';
+      date.textContent = 'Tanggal: ' + (formatCommunityDate(dateText) || '—');
+      card.appendChild(date);
+    }
+    const body = document.createElement('p');
+    body.className = 'data-body';
+    body.textContent = safeText(bodyText, 'Belum ada keterangan untuk informasi ini.');
+    card.appendChild(body);
+    container.appendChild(card);
+  });
+}
+
+// Banner slider: 3 slot, public read, admin-only upload/delete through Storage RLS.
+const BANNER_BUCKET = 'world-envy-banners';
+const BANNER_PREFIX = 'clan-banner';
+const BANNER_INTERVAL_MS = 5000;
+let bannerSlides = [];
+let currentBannerIndex = 0;
+let bannerTimer = null;
+function bannerSlotFromName(name) {
+  if (/^clan-banner\.(jpg|png|webp)$/i.test(name) || /^clan-banner-1\.(jpg|png|webp)$/i.test(name)) return 1;
+  const match = name.match(/^clan-banner-([23])\.(jpg|png|webp)$/i);
+  return match ? Number(match[1]) : null;
+}
+function renderBannerDots() {
+  const dots = document.getElementById('banner-slide-dots');
+  if (!dots) return;
+  dots.replaceChildren();
+  bannerSlides.forEach((slide, index) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'banner-slide-dot' + (index === currentBannerIndex ? ' active' : '');
+    dot.setAttribute('aria-label', `Tampilkan banner ${slide.slot}`);
+    dot.setAttribute('aria-current', index === currentBannerIndex ? 'true' : 'false');
+    dot.addEventListener('click', () => showBanner(index, true));
+    dots.appendChild(dot);
+  });
+}
+function showBanner(index, resetTimer = false) {
+  const track = document.getElementById('clan-banner-track');
+  const placeholder = document.getElementById('clan-banner-placeholder');
+  if (!track || !placeholder) return;
+  if (!bannerSlides.length) {
+    track.replaceChildren();
+    track.style.display = 'none';
+    track.style.transform = 'translateX(0)';
+    placeholder.style.display = 'grid';
+    if (bannerTimer) clearInterval(bannerTimer);
+    bannerTimer = null;
+    renderBannerDots();
+    return;
+  }
+  currentBannerIndex = ((index % bannerSlides.length) + bannerSlides.length) % bannerSlides.length;
+  // Banner ditata berdampingan; perpindahan dilakukan dengan menggeser track secara smooth.
+  if (track.children.length !== bannerSlides.length || [...track.children].some((img, i) => img.dataset.slot !== String(bannerSlides[i].slot) || img.src !== bannerSlides[i].url)) {
+    track.replaceChildren();
+    bannerSlides.forEach(slide => {
+      const img = document.createElement('img');
+      img.src = slide.url;
+      img.alt = `Banner ${slide.slot} WORLD ENVY`;
+      img.dataset.slot = String(slide.slot);
+      img.draggable = false;
+      img.onerror = () => { img.alt = `Banner ${slide.slot} gagal dimuat`; };
+      track.appendChild(img);
+    });
+  }
+  track.style.display = 'flex';
+  placeholder.style.display = 'none';
+  track.style.transform = `translateX(-${currentBannerIndex * 100}%)`;
+  renderBannerDots();
+  if (resetTimer && bannerTimer) {
+    clearInterval(bannerTimer);
+    bannerTimer = setInterval(() => showBanner(currentBannerIndex + 1), BANNER_INTERVAL_MS);
+  }
+}
+async function loadBanner() {
+  const tools = document.getElementById('banner-admin-tools');
+  if (tools) tools.style.display = verifiedAdmin ? 'flex' : 'none';
+  const { data, error } = await db.storage.from(BANNER_BUCKET).list('', { limit: 100 });
+  if (error) { console.warn('Banner belum dapat diperiksa:', error.message); return; }
+  const bySlot = new Map();
+  (data || []).forEach(file => {
+    const slot = bannerSlotFromName(file.name);
+    if (slot === null) return;
+    const current = bySlot.get(slot);
+    if (!current || String(file.updated_at || file.created_at || '') > String(current.updated_at || current.created_at || '')) bySlot.set(slot, file);
+  });
+  bannerSlides = [...bySlot.entries()].sort((a,b)=>a[0]-b[0]).map(([slot,file]) => {
+    const { data: urlData } = db.storage.from(BANNER_BUCKET).getPublicUrl(file.name);
+    return { slot, name:file.name, url:urlData.publicUrl + '?v=' + encodeURIComponent(file.updated_at || file.created_at || Date.now()) };
+  });
+  if (currentBannerIndex >= bannerSlides.length) currentBannerIndex = 0;
+  showBanner(currentBannerIndex);
+  if (bannerTimer) clearInterval(bannerTimer);
+  bannerTimer = bannerSlides.length > 1 ? setInterval(() => showBanner(currentBannerIndex + 1), BANNER_INTERVAL_MS) : null;
+}
+document.getElementById('banner-upload-button').addEventListener('click', () => document.getElementById('banner-file-input').click());
+document.getElementById('banner-file-input').addEventListener('change', async e => {
+  if (!verifiedAdmin) return;
+  const file = e.target.files?.[0]; if (!file) return;
+  const msg = document.getElementById('banner-message');
+  const slot = Number(document.getElementById('banner-slot-select').value);
+  if (!['image/jpeg','image/png','image/webp'].includes(file.type)) { msg.textContent='Pilih gambar JPG, PNG, atau WebP.'; return; }
+  if (file.size > 5 * 1024 * 1024) { msg.textContent='Ukuran gambar maksimal 5 MB.'; return; }
+  msg.textContent=`Mengunggah Banner ${slot}...`;
+  const ext = file.type === 'image/jpeg' ? 'jpg' : file.type.split('/')[1];
+  const { data: oldFiles, error: listError } = await db.storage.from(BANNER_BUCKET).list('', { limit: 100 });
+  if (listError) { msg.textContent='Gagal memeriksa banner: '+listError.message; return; }
+  const old = (oldFiles || []).filter(item => bannerSlotFromName(item.name) === slot).map(item => item.name);
+  if (old.length) { const { error: removeError } = await db.storage.from(BANNER_BUCKET).remove(old); if (removeError) { msg.textContent='Gagal mengganti banner: '+removeError.message; return; } }
+  const objectName = slot === 1 ? `${BANNER_PREFIX}.${ext}` : `${BANNER_PREFIX}-${slot}.${ext}`;
+  const { error } = await db.storage.from(BANNER_BUCKET).upload(objectName, file, { upsert:true, contentType:file.type });
+  if (error) { msg.textContent='Upload gagal: '+error.message; return; }
+  msg.textContent=`Banner ${slot} berhasil diperbarui.`; e.target.value=''; await loadBanner();
+});
+document.getElementById('banner-delete-button').addEventListener('click', async () => {
+  if (!verifiedAdmin || !confirm('Hapus banner yang dipilih?')) return;
+  const msg = document.getElementById('banner-message');
+  const slot = Number(document.getElementById('banner-slot-select').value);
+  const { data, error: listError } = await db.storage.from(BANNER_BUCKET).list('', { limit:100 });
+  if (listError) { msg.textContent='Gagal memeriksa banner: '+listError.message; return; }
+  const paths = (data||[]).filter(file=>bannerSlotFromName(file.name)===slot).map(file=>file.name);
+  if (!paths.length) { msg.textContent=`Banner ${slot} belum diisi.`; return; }
+  const { error } = await db.storage.from(BANNER_BUCKET).remove(paths);
+  msg.textContent = error ? 'Gagal menghapus: '+error.message : `Banner ${slot} berhasil dihapus.`;
+  if (!error) await loadBanner();
+});
+
+// Admin CRUD for blacklist. created_at is used as posting date; no schema changes here.
+async function loadBlacklistAdmin() {
+  if (!verifiedAdmin) return;
+  const rows=document.getElementById('blacklist-admin-rows'); if(!rows) return; rows.replaceChildren();
+  const {data,error}=await db.from('player_blacklist').select('*').order('created_at',{ascending:false});
+  if(error){document.getElementById('blacklist-admin-message').textContent='Gagal memuat: '+error.message;return;}
+  (data||[]).forEach(item=>{const tr=document.createElement('tr'); const td1=document.createElement('td');td1.textContent=item.user_id||'';const td2=document.createElement('td');td2.textContent=({'MUSANG':'BAHAYA','PENJAHAT TINGKAT KAKAP':'PENJAHAT KELAS KAKAP'})[item.crime_level]||item.crime_level||'BAHAYA';const td3=document.createElement('td');
+    const edit=document.createElement('button');edit.textContent='Edit';edit.onclick=()=>{document.getElementById('blacklist-edit-id').value=item.id;document.getElementById('blacklist-user-id').value=item.user_id||'';document.getElementById('blacklist-reason').value=item.reason||'';document.getElementById('blacklist-crime-level').value=item.crime_level||'MUSANG';};
+    const del=document.createElement('button');del.textContent='Hapus';del.style.marginLeft='6px';del.onclick=async()=>{if(confirm('Hapus data blacklist ini?')){const r=await db.from('player_blacklist').delete().eq('id',item.id);document.getElementById('blacklist-admin-message').textContent=r.error?'Gagal hapus: '+r.error.message:'Data dihapus.';await loadBlacklistAdmin();await loadBlacklist();}};td3.append(edit,del);tr.append(td1,td2,td3);rows.append(tr);
+  });
+}
+document.getElementById('blacklist-admin-form').addEventListener('submit',async e=>{e.preventDefault();if(!verifiedAdmin)return;const id=document.getElementById('blacklist-edit-id').value;const payload={user_id:document.getElementById('blacklist-user-id').value.trim(),reason:document.getElementById('blacklist-reason').value.trim(),crime_level:document.getElementById('blacklist-crime-level').value};const result=id?await db.from('player_blacklist').update(payload).eq('id',id):await db.from('player_blacklist').insert(payload);document.getElementById('blacklist-admin-message').textContent=result.error?'Gagal menyimpan: '+result.error.message:'Blacklist berhasil disimpan.';if(!result.error){e.target.reset();document.getElementById('blacklist-edit-id').value='';await loadBlacklistAdmin();await loadBlacklist();}});
+document.getElementById('blacklist-cancel-edit').addEventListener('click',()=>{document.getElementById('blacklist-admin-form').reset();document.getElementById('blacklist-edit-id').value='';});
+
+// Admin CRUD for announcements; supports the schema shared by the project.
+async function loadCommunityAdmin(){if(!verifiedAdmin)return;const rows=document.getElementById('community-admin-rows');if(!rows)return;rows.replaceChildren();const {data,error}=await db.from('announcements').select('*').order('event_date',{ascending:true});if(error){document.getElementById('community-admin-message').textContent='Gagal memuat: '+error.message;return;}(data||[]).forEach(item=>{const tr=document.createElement('tr');const c=document.createElement('td');c.textContent=item.category||'Announcement';const t=document.createElement('td');t.textContent=item.title||'(Tanpa judul)';const a=document.createElement('td');const edit=document.createElement('button');edit.textContent='Edit';edit.onclick=()=>{document.getElementById('community-edit-id').value=item.id;document.getElementById('community-category').value=item.category||'Announcement';document.getElementById('community-title-input').value=item.title||'';document.getElementById('community-body-input').value=item.body||'';document.getElementById('community-date-input').value=(item.event_date||'').slice(0,10);document.getElementById('community-status-input').value=item.event_status==='Finished'?'Finished':'Active';document.getElementById('community-pinned-input').checked=!!item.is_pinned;};const del=document.createElement('button');del.textContent='Hapus';del.style.marginLeft='6px';del.onclick=async()=>{if(confirm('Hapus informasi ini?')){const r=await db.from('announcements').delete().eq('id',item.id);document.getElementById('community-admin-message').textContent=r.error?'Gagal hapus: '+r.error.message:'Informasi dihapus.';await loadCommunityAdmin();await loadCommunityItems();}};a.append(edit,del);tr.append(c,t,a);rows.append(tr);});}
+document.getElementById('community-admin-form').addEventListener('submit',async e=>{e.preventDefault();if(!verifiedAdmin)return;const id=document.getElementById('community-edit-id').value;const category=document.getElementById('community-category').value;const payload={category,title:document.getElementById('community-title-input').value.trim(),body:document.getElementById('community-body-input').value.trim(),event_date:document.getElementById('community-date-input').value||null,event_status:document.getElementById('community-status-input').value || 'Active',is_pinned:document.getElementById('community-pinned-input').checked};const result=id?await db.from('announcements').update(payload).eq('id',id):await db.from('announcements').insert(payload);document.getElementById('community-admin-message').textContent=result.error?'Gagal menyimpan: '+result.error.message:'Informasi berhasil disimpan.';if(!result.error){e.target.reset();document.getElementById('community-edit-id').value='';await loadCommunityAdmin();await loadCommunityItems();}});
+document.getElementById('community-cancel-edit').addEventListener('click',()=>{document.getElementById('community-admin-form').reset();document.getElementById('community-edit-id').value='';});
+
+
+// Shadow Memory: standalone mini-game; no database tables or saved scores required.
+(() => {
+  const startBtn = document.getElementById('shadow-start-button');
+  const game = document.getElementById('shadow-memory-game');
+  if (!startBtn || !game) return;
+  const board = document.getElementById('shadow-board');
+  const scoreEl = document.getElementById('shadow-score');
+  const levelEl = document.getElementById('shadow-level');
+  const pairsEl = document.getElementById('shadow-pairs');
+  const message = document.getElementById('shadow-message');
+  const overlay = document.getElementById('shadow-overlay');
+  const continueBtn = document.getElementById('shadow-continue-button');
+  const replayBtn = document.getElementById('shadow-replay-button');
+  const exitBtn = document.getElementById('shadow-exit-button');
+  const symbols = ['💎','🌙','👁️','ᚱ','🔮','✦','☽','⚝','♜','🜂','❖','☯','✧','⟁','⌘','♢','☼','ᛟ','⟡','🜁'];
+  let score=0, level=1, cards=[], opened=[], matched=0, locked=false, running=false, audioCtx=null;
+  function sound(freq=440,duration=.08,type='sine',volume=.035){
+    try { audioCtx ||= new (window.AudioContext||window.webkitAudioContext)(); if(audioCtx.state==='suspended') audioCtx.resume(); const osc=audioCtx.createOscillator(), gain=audioCtx.createGain(); osc.type=type;osc.frequency.value=freq;gain.gain.setValueAtTime(volume,audioCtx.currentTime);gain.gain.exponentialRampToValueAtTime(.001,audioCtx.currentTime+duration);osc.connect(gain);gain.connect(audioCtx.destination);osc.start();osc.stop(audioCtx.currentTime+duration); } catch(e){}
+  }
+  function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+  function updateStats(){scoreEl.textContent=score;levelEl.textContent=level;pairsEl.textContent=`${matched} / ${Math.min(4+level-1, symbols.length)}`;}
+  function setMessage(t){message.textContent=t;}
+  function makeDeck(){
+    const pairCount=Math.min(4+level-1,symbols.length); const picked=shuffle([...symbols]).slice(0,pairCount); const deck=[];
+    picked.forEach((symbol,i)=>{deck.push({id:`${i}a`,symbol,kind:'pair',pair:i});deck.push({id:`${i}b`,symbol,kind:'pair',pair:i});});
+    // One cursed core is added each level, keeping the board playable on small screens.
+    deck.push({id:'bomb-'+level,symbol:'☠',kind:'bomb',pair:null});
+    cards=shuffle(deck);opened=[];matched=0;locked=false;renderBoard();updateStats();
+  }
+  function renderBoard(){
+    board.replaceChildren(); board.style.gridTemplateColumns=cards.length>20?'repeat(5,minmax(0,1fr))':'repeat(4,minmax(0,1fr))';
+    cards.forEach((card,index)=>{const btn=document.createElement('button');btn.type='button';btn.className='shadow-card';btn.setAttribute('aria-label',`Kartu ${index+1}, tertutup`);btn.dataset.index=index;const symbol=document.createElement('span');symbol.className='shadow-symbol';symbol.textContent=card.symbol;btn.appendChild(symbol);btn.addEventListener('click',()=>reveal(index,btn));board.appendChild(btn);});
+  }
+  function reveal(index,btn){
+    if(!running||locked||btn.disabled||opened.includes(index))return;
+    const card=cards[index];score+=50;btn.classList.add('is-revealed');btn.setAttribute('aria-label',`Kartu terbuka: ${card.kind==='bomb'?'cursed core':card.symbol}`);btn.querySelector('.shadow-symbol').textContent=card.symbol;btn.disabled=true;sound(520,.06);updateStats();
+    if(card.kind==='bomb'){
+      btn.classList.add('is-bomb');setMessage('CURSED CORE! Kamu menemukan bom. Permainan berakhir!');sound(115,.42,'sawtooth',.06);updateStats();
+      // Bomb means instant defeat. Replay always starts from level 1 with score reset.
+      locked=true;endGame(false);return;
+    }
+    opened.push(index);
+    if(opened.length===2){locked=true;const [a,b]=opened; if(cards[a].pair===cards[b].pair){score+=100;matched++;[a,b].forEach(i=>{const el=board.children[i];el.classList.remove('is-revealed');el.classList.add('is-matched');el.disabled=true;});opened=[];locked=false;setMessage('Pasangan ditemukan! +100 bonus.');sound(760,.12,'triangle');updateStats();if(matched===Math.min(4+level-1,symbols.length)){setTimeout(()=>endGame(true),500);}}else{setMessage('Belum cocok. Ingat simbolnya.');sound(240,.1,'triangle');setTimeout(()=>{[a,b].forEach(i=>{const el=board.children[i];el.classList.remove('is-revealed');el.querySelector('.shadow-symbol').textContent='';el.disabled=false;el.setAttribute('aria-label',`Kartu ${i+1}, tertutup`);});opened=[];locked=false;},850);}
+    } else setMessage('Pilih satu kartu lagi untuk mencari pasangan.');
+  }
+  function endGame(won){
+    running=false;
+    const finalScore=score;
+    overlay.hidden=false;
+    continueBtn.hidden=!won;
+    replayBtn.hidden=won;
+    document.getElementById('shadow-overlay-kicker').textContent=won?'TRIAL COMPLETE':'SHADOW CONSUMED';
+    document.getElementById('shadow-overlay-title').textContent=won?`Level ${level} selesai`:'Permainan berakhir';
+    if(won){
+      document.getElementById('shadow-overlay-text').textContent=`Shadow Core ${finalScore}. Pasangan berhasil ditemukan semua. Siap menghadapi level berikutnya?`;
+      sound(880,.22,'triangle');
+    }else{
+      // Kekalahan langsung mengembalikan progres ke Level 1 dan mengacak ulang semua posisi kartu.
+      level=1;
+      score=0;
+      matched=0;
+      opened=[];
+      locked=false;
+      makeDeck();
+      document.getElementById('shadow-overlay-text').textContent=`Kamu menemukan bom! Shadow Core direset ke 0 (skor sebelum kalah: ${finalScore}). Level kembali ke 1 dan semua posisi kartu diacak ulang.`;
+      continueBtn.hidden=true;
+      replayBtn.hidden=false;
+      sound(90,.45,'sawtooth',.06);
+    }
+  }
+  function startGame(){score=0;level=1;matched=0;opened=[];locked=false;running=true;game.hidden=false;overlay.hidden=true;continueBtn.hidden=true;replayBtn.hidden=true;makeDeck();setMessage('Trial dimulai dari Level 1. Pilih kartu pertama.');startBtn.textContent='↻ Mulai ulang Shadow Memory';game.scrollIntoView({behavior:'smooth',block:'start'});sound(440,.1);}
+  startBtn.addEventListener('click',startGame);
+  continueBtn.addEventListener('click',()=>{level++;running=true;overlay.hidden=true;makeDeck();setMessage(`Level ${level}: simbol baru telah disebar.`);sound(620,.12,'triangle');});
+  replayBtn.textContent='↻ Ulangi dari Level 1';
+  replayBtn.addEventListener('click',startGame);
+  exitBtn.addEventListener('click',()=>{running=false;overlay.hidden=true;game.hidden=true;setMessage('Pilih Masuki Shadow Memory untuk bermain lagi.');document.getElementById('event-hub-title').scrollIntoView({behavior:'smooth',block:'start'});});
+})();
+
+loadBanner();
+loadPlayers();
+restoreAdminSession();
+</script>
+</body>
+</html>
+
